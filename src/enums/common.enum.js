@@ -1,0 +1,4 @@
+export const COMMON_FORMAT_DATE = {
+  ONLY_DATE: 'YYYY-MM-DD',
+  HOUR_DATE: 'HH:mm YYYY-MM-DD'
+}

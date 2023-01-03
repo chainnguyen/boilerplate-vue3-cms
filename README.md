@@ -51,5 +51,9 @@ yarn build:production | npm run build:production
 yarn lint | npm run lint
 ```
 
+## Commit
+
+See [COMMIT_GUIDE.md](COMMIT_GUIDE.md).
+
 ## License
 Copyright by [Chain Nguyễn](https://chainnguyen.github.io/chain-curriculum-vitae/).

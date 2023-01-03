@@ -1,14 +1,19 @@
 <template>
   <div>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/images/vue.svg" class="logo vue" alt="Vue logo" />
+    <a
+      href="https://vuejs.org/"
+      target="_blank">
+      <img
+        src="./assets/images/vue.svg"
+        class="logo vue"
+        alt="Vue logo" />
     </a>
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <HelloWorld />
 </template>
 
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './shared/components/HelloWorld.vue'
 </script>
 
 <style lang="scss" scoped>

@@ -1,0 +1,7 @@
+export const PER_PAGE = {
+  EVENT: 10,
+  COLLECTION: 10,
+  SET_CLOTHES: 10,
+  ITEM_SET_CLOTHES: 10,
+  FRAME: 10,
+}
