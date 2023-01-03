@@ -1,0 +1,45 @@
+// Typography
+$font-family-sans-serif: 'Open Sans', sans-serif;
+$font-size-base: 16px;
+$line-height-base: 1.5;
+
+// Color
+$white: #ffffff;
+$default-color: #000000;
+$main-color: rgba(82, 29, 64, 1);
+$default-background: #ffffff;
+$primary-color: #1890FF;
+$secondary-color: #ECECEC;
+$third-color: #faac13;
+$four-color: #CC9203;
+$light-grey-blue: #F0F0F0;
+$light-blue: #0337fd9e;
+$red-error: #cd201f;
+$scroll-bar-color: #CACACA;
+$error-color: #cfcfcf;
+$text-black-color: rgba(0, 0, 0, 0.85);
+$text-light-black-color: rgba(0, 0, 0, 0.45);
+$text-weak-black-color: rgba(0, 0, 0, 0.25);
+$text-color: #1B212D;
+
+$status-green: #4CAF50;
+$status-grey: #717A89;
+$status-red-brown: #8F0101;
+
+$button-action-green: #4CAF50;
+$button-action-blue: #3B82F6;
+$button-action-grey: #A4AAB4;
+$button-action-grey-2: #E2E6EE;
+$button-action-red: #E80808;
+$button-delete: #ff4d4f;
+
+// Breakpoint responsive
+$info-desktop: "only screen and (max-width : 1919px)";
+$info-laptop-medium: "only screen and (max-width : 1440px)";
+$info-laptop-normal: "only screen and (max-width : 1368px)";
+$info-laptop-small: "only screen and (max-width : 1280px)";
+$info-laptop-smallest: "only screen and (max-width : 1200px)";
+$info-ipad-pro: "only screen and (max-width : 992px)";
+$info-ipad: "only screen and (max-width : 768px)";
+$info-phone-normal: "only screen and (max-width : 576px)";
+$info-phone-small: "only screen and (max-width : 341px)";

@@ -1,0 +1,45 @@
+@import "../helpers/variables";
+
+/* ===================== CUSTOM SCROLL BAR ========================== */
+.custom-scrollbar-vertical::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar-horizontal::-webkit-scrollbar {
+  height: 4px;
+}
+
+.custom-scrollbar-vertical::-webkit-scrollbar-track,
+.custom-scrollbar-horizontal::-webkit-scrollbar-track {
+  box-shadow: transparent;
+}
+
+.custom-scrollbar-vertical::-webkit-scrollbar-thumb,
+.custom-scrollbar-horizontal::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: $scroll-bar-color;
+}
+
+.ant-table-body,
+.ant-select-dropdown-menu {
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: $scroll-bar-color;
+  }
+}
+
+.ant-select-dropdown-menu {
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: auto;
+  }
+}
+/* ===================== END CUSTOM SCROLL BAR ========================== */

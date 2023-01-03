@@ -1,0 +1,1 @@
+npx shipit prod deploy

@@ -1,0 +1,45 @@
+@import '../helpers/_variables.scss';
+
+.custom-table {
+  .ant-table-thead .ant-table-column-title,
+  .ant-table-tbody tr td:first-child {
+    font-weight: 600;
+  }
+
+  .ant-table-thead > tr > th {
+    padding: 14px 8px;
+  }
+
+  .ant-table-tbody > tr > td {
+    padding: 10.5px 8px;
+  }
+
+  .col-image {
+    width: 80px;
+    height: auto;
+  }
+}
+
+.customize-table-nested {
+  .ant-spin-nested-loading {
+    .ant-spin-container {
+      .ant-table {
+        .ant-table-body {
+          margin: 0;
+          padding: 6px 0;
+
+          .ant-table-expanded-row {
+            background: $white;
+          }
+        }
+      }
+    }
+  }
+
+  .expand-hide {
+    .ant-table-row-expand-icon {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}

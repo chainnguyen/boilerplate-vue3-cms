@@ -1,0 +1,87 @@
+@import '../helpers/_mixins.scss';
+@import '../helpers/_variables.scss';
+
+.searchbar,
+.list-table,
+.main-form_container {
+  padding: 15px 33px 13px 15px;
+  background: $white;
+  margin-bottom: 9px;
+  @media #{$info-ipad} {
+    padding: 15px;
+  }
+}
+
+.list-table {
+  max-height: calc(100vh - 341px); // 341 is the sum (height, margin) of all elements other than itself
+  overflow: auto;
+}
+
+.searchbar {
+  @include flex();
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px 30px;
+  @media #{$info-ipad} {
+    padding: 20px;
+  }
+
+  & > * {
+    width: 300px;
+    @media #{$info-ipad} {
+      width: 100%
+    }
+    &:not(:last-child) {
+      margin-right: 50px;
+      @media #{$info-ipad} {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.main-form {
+  &_row {
+    @media #{$info-ipad-pro} {
+      justify-content: space-between;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 42px;
+      @media #{$info-ipad-pro} {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  &_field {
+    flex-basis: calc((100% - 289px) / 3);
+    min-width: 200px;
+    @media #{$info-ipad-pro} {
+      flex-basis: calc((100% / 2) - 20px);
+    }
+    @media #{$info-ipad} {
+      flex-basis: 100%;
+    }
+
+    &:not(:last-child) {
+      margin-right: 90px;
+      @media #{$info-ipad-pro} {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  &_controller {
+    @include flex();
+    justify-content: center;
+    align-items: center;
+    padding: 8.5px;
+    background: $white;
+
+    > *:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+}
