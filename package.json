@@ -18,6 +18,10 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@intlify/unplugin-vue-i18n": "^0.8.1",
+    "@types/lodash-es": "^4.17.6",
+    "@types/js-cookie": "^3.0.2",
+    "@vueuse/core": "^8.4.1",
     "ant-design-vue": "^3.2.15",
     "axios": "^1.2.2",
     "js-cookie": "^3.0.1",
@@ -28,11 +32,10 @@
     "vue": "^3.2.45",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.6",
-    "vuex": "^3.4.0"
+    "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^16.11.47",
-    "@types/lodash-es": "^4.17.6",
     "@vitejs/plugin-vue": "^4.0.0",
     "eslint": "^8.31.0",
     "eslint-config-prettier": "^8.6.0",

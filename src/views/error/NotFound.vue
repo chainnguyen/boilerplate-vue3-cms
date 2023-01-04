@@ -1,8 +1,8 @@
 <template>
   <a-result
-    status="500"
-    title="500"
-    :sub-title="$t('server_error')">
+    status="404"
+    title="404"
+    :sub-title="$t('not_found')">
     <template #extra>
       <router-link
         tag="button"
@@ -12,3 +12,12 @@
     </template>
   </a-result>
 </template>
+
+<script lang="ts">
+// Composition
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'NotFound',
+})
+</script>

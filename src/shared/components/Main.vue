@@ -8,7 +8,14 @@
   </a-layout-content>
 </template>
 
-<script setup lang="ts"></script>
+<script lang="ts">
+// Composition
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'MainComponent',
+})
+</script>
 
 <style lang="scss" scoped>
 #main {

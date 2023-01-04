@@ -17,8 +17,9 @@
   </a-layout>
 </template>
 
-<script>
-// Components
+<script lang="ts">
+// Composition
+import { defineComponent, ref } from 'vue'
 // import SidebarComponents from '@/shared/components/layout/Sidebar'
 // import HeaderComponents from '@/shared/components/layout/Header'
 // import MainComponents from '@/shared/components/Main'
@@ -26,23 +27,20 @@
 // Others
 import vi_VN from 'ant-design-vue/es/locale/vi_VN'
 
-export default {
+export default defineComponent({
   name: 'DefaultLayout',
 
-  components: {
-    // SidebarComponents,
-    // HeaderComponents,
-    // MainComponents,
-    // BreadcrumbComponents,
-  },
+  components: {},
 
-  data() {
+  setup() {
+    const collapsed = ref<boolean>(false)
+
     return {
-      collapsed: false,
+      collapsed,
       locale: vi_VN,
     }
   },
-}
+})
 </script>
 
 <style lang="scss">

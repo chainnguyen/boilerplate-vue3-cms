@@ -32,10 +32,19 @@
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
+<script lang="ts">
+// Composition
+import { defineComponent, ref } from 'vue'
 
-const count = ref(0)
+export default defineComponent({
+  name: 'HelloComponent',
+
+  setup() {
+    const count = ref<number>(0)
+
+    return { count }
+  },
+})
 </script>
 
 <style scoped>

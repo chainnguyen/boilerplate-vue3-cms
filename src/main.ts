@@ -1,18 +1,23 @@
+// Core
 import { createApp } from 'vue'
-import './assets/scss/main.scss'
-import App from './App.vue'
-// @ts-ignore
-import router from './router'
-// @ts-ignore
-// import store from './shared/store'
+import App from '@/App.vue'
 
-// Import Plugins
-// import './plugins/validation'
-// import './plugins/antdesign'
-// import i18n from './plugins/i18n'
-import './plugins'
+// Library
+import router from '@/router'
+import store from '@/shared/store'
+import ant from '@/plugins/ant-design'
+import i18n from '@/plugins/locale'
 
-// Import Directive
-import './shared/directives'
+// Plugin
+import '@/plugins'
 
-createApp(App).use(router).mount('#app')
+// Directive
+import '@/shared/directives'
+
+const app = createApp(App)
+
+app.use(ant).use(router).use(store).use(i18n)
+
+router.isReady().then(() => {
+  app.mount('#app')
+})

@@ -1,8 +1,8 @@
 <template>
   <a-result
-    status="403"
-    title="403"
-    :sub-title="$t('not_authenticated')">
+    status="500"
+    title="500"
+    :sub-title="$t('server_error')">
     <template #extra>
       <router-link
         tag="button"
@@ -12,3 +12,12 @@
     </template>
   </a-result>
 </template>
+
+<script lang="ts">
+// Composition
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'ServerError',
+})
+</script>

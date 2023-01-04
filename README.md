@@ -18,20 +18,20 @@ yarn | npm install
 ## Create a global <code>.env.{development|staging|production}</code> file from .env.example
 <code>.env.development</code>
 ```
-BASE_URL=./
-VUE_APP_API_URL=https://localhost:8080/dev
+VITE_ROUTER_BASE=./
+VITE_APP_AXIOS_BASE_URL=https://localhost:8080/dev
 ```
 
 <code>.env.staging</code>
 ```
-BASE_URL=./
-VUE_APP_API_URL=https://localhost:8080/stag
+VITE_ROUTER_BASE=./
+VITE_APP_AXIOS_BASE_URL=https://localhost:8080/stag
 ```
 
 <code>.env.production</code>
 ```
-BASE_URL=./
-VUE_APP_API_URL=https://localhost:8080/prod
+VITE_ROUTER_BASE=./
+VITE_APP_AXIOS_BASE_URL=https://localhost:8080/prod
 ```
 
 ### Compiles and hot-reloads for development
@@ -51,9 +51,9 @@ yarn build:production | npm run build:production
 yarn lint | npm run lint
 ```
 
-## Commit
+## Commit guide and changelog
 
-See [COMMIT_GUIDE.md](COMMIT_GUIDE.md).
+See more [COMMIT_GUIDE.md](COMMIT_GUIDE.md) and [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 Copyright by [Chain Nguyễn](https://chainnguyen.github.io/chain-curriculum-vitae/).

@@ -19,11 +19,11 @@ export default [
           breadcrumb: [
             { title: 'home_page' },
             { title: 'management_collection.page_title' },
-            { title: 'management_collection.page_list' }
+            { title: 'management_collection.page_list' },
           ],
-          role: [PERMISSION.ADMIN]
+          role: [PERMISSION.ADMIN],
         },
-        beforeEnter: ResolveGuard([PermissionGuard])
+        beforeEnter: ResolveGuard([PermissionGuard]),
       },
       {
         path: '/create-collection',
@@ -32,12 +32,15 @@ export default [
         meta: {
           breadcrumb: [
             { title: 'home_page', routeName: 'home' },
-            { title: 'management_collection.page_title', routeName: 'management_collection' },
-            { title: 'management_collection.create_collection' }
+            {
+              title: 'management_collection.page_title',
+              routeName: 'management_collection',
+            },
+            { title: 'management_collection.create_collection' },
           ],
-          role: [PERMISSION.ADMIN]
+          role: [PERMISSION.ADMIN],
         },
-        beforeEnter: ResolveGuard([PermissionGuard])
+        beforeEnter: ResolveGuard([PermissionGuard]),
       },
       {
         path: '/edit-collection/:id',
@@ -46,14 +49,17 @@ export default [
         meta: {
           breadcrumb: [
             { title: 'home_page', routeName: 'home' },
-            { title: 'management_collection.page_title', routeName: 'management_collection' },
-            { title: 'management_collection.edit_collection' }
+            {
+              title: 'management_collection.page_title',
+              routeName: 'management_collection',
+            },
+            { title: 'management_collection.edit_collection' },
           ],
-          role: [PERMISSION.ADMIN]
+          role: [PERMISSION.ADMIN],
         },
-        beforeEnter: ResolveGuard([PermissionGuard])
-      }
+        beforeEnter: ResolveGuard([PermissionGuard]),
+      },
     ],
-    beforeEnter: ResolveGuard([AuthGuard])
-  }
+    beforeEnter: ResolveGuard([AuthGuard]),
+  },
 ]

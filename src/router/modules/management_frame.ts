@@ -19,11 +19,11 @@ export default [
           breadcrumb: [
             { title: 'home_page' },
             { title: 'management_frame.page_title' },
-            { title: 'management_frame.page_list' }
+            { title: 'management_frame.page_list' },
           ],
-          role: [PERMISSION.ADMIN]
+          role: [PERMISSION.ADMIN],
         },
-        beforeEnter: ResolveGuard([PermissionGuard])
+        beforeEnter: ResolveGuard([PermissionGuard]),
       },
       {
         path: '/create-frame',
@@ -32,12 +32,15 @@ export default [
         meta: {
           breadcrumb: [
             { title: 'home_page', routeName: 'home' },
-            { title: 'management_frame.page_title', routeName: 'management_frame' },
-            { title: 'management_frame.create_frame' }
+            {
+              title: 'management_frame.page_title',
+              routeName: 'management_frame',
+            },
+            { title: 'management_frame.create_frame' },
           ],
-          role: [PERMISSION.ADMIN]
+          role: [PERMISSION.ADMIN],
         },
-        beforeEnter: ResolveGuard([PermissionGuard])
+        beforeEnter: ResolveGuard([PermissionGuard]),
       },
       {
         path: '/edit-frame/:id',
@@ -46,14 +49,17 @@ export default [
         meta: {
           breadcrumb: [
             { title: 'home_page', routeName: 'home' },
-            { title: 'management_frame.page_title', routeName: 'management_frame' },
-            { title: 'management_frame.edit_frame' }
+            {
+              title: 'management_frame.page_title',
+              routeName: 'management_frame',
+            },
+            { title: 'management_frame.edit_frame' },
           ],
-          role: [PERMISSION.ADMIN]
+          role: [PERMISSION.ADMIN],
         },
-        beforeEnter: ResolveGuard([PermissionGuard])
-      }
+        beforeEnter: ResolveGuard([PermissionGuard]),
+      },
     ],
-    beforeEnter: ResolveGuard([AuthGuard])
-  }
+    beforeEnter: ResolveGuard([AuthGuard]),
+  },
 ]

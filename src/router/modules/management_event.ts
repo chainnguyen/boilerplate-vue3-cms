@@ -21,11 +21,11 @@ export default [
           breadcrumb: [
             { title: 'home_page' },
             { title: 'management_event.page_title' },
-            { title: 'management_event.page_list' }
+            { title: 'management_event.page_list' },
           ],
-          role: [PERMISSION.ADMIN]
+          role: [PERMISSION.ADMIN],
         },
-        beforeEnter: ResolveGuard([PermissionGuard])
+        beforeEnter: ResolveGuard([PermissionGuard]),
       },
       {
         path: '/create-event',
@@ -34,12 +34,15 @@ export default [
         meta: {
           breadcrumb: [
             { title: 'home_page', routeName: 'home' },
-            { title: 'management_event.page_title', routeName: 'management_event' },
-            { title: 'management_event.create_event' }
+            {
+              title: 'management_event.page_title',
+              routeName: 'management_event',
+            },
+            { title: 'management_event.create_event' },
           ],
-          role: [PERMISSION.ADMIN]
+          role: [PERMISSION.ADMIN],
         },
-        beforeEnter: ResolveGuard([PermissionGuard])
+        beforeEnter: ResolveGuard([PermissionGuard]),
       },
       {
         path: '/edit-event/:id',
@@ -48,14 +51,17 @@ export default [
         meta: {
           breadcrumb: [
             { title: 'home_page', routeName: 'home' },
-            { title: 'management_event.page_title', routeName: 'management_event' },
-            { title: 'management_event.edit_event' }
+            {
+              title: 'management_event.page_title',
+              routeName: 'management_event',
+            },
+            { title: 'management_event.edit_event' },
           ],
-          role: [PERMISSION.ADMIN]
+          role: [PERMISSION.ADMIN],
         },
-        beforeEnter: ResolveGuard([PermissionGuard])
-      }
+        beforeEnter: ResolveGuard([PermissionGuard]),
+      },
     ],
-    beforeEnter: ResolveGuard([AuthGuard])
-  }
+    beforeEnter: ResolveGuard([AuthGuard]),
+  },
 ]

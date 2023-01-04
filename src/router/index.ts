@@ -9,8 +9,9 @@ import { routes } from '@/router/routes'
 // import head from 'lodash-es/head'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_ROUTER_BASE as string),
   routes,
+  scrollBehavior: () => ({ left: 0, top: 0 }),
 })
 
 /**

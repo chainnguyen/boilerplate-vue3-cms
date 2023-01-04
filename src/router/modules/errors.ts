@@ -15,10 +15,9 @@ export default [
     meta: {},
     component: page('error/NotAuthenticated.vue'),
   },
-
   // Not found
   {
-    path: '*',
+    path: '/:catchAll(.*)',
     name: 'not_found',
     meta: {},
     component: page('error/NotFound.vue'),

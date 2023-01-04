@@ -12,8 +12,19 @@
   <HelloWorld />
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
+// Composition
+import { defineComponent } from 'vue'
+// Components
 import HelloWorld from './shared/components/HelloWorld.vue'
+
+export default defineComponent({
+  name: 'App',
+
+  components: {
+    HelloWorld,
+  },
+})
 </script>
 
 <style lang="scss" scoped>
