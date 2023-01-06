@@ -32,11 +32,14 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<IUploadState, IUploadState>, 'commit'>
 
 export type UploadActions = {
-  postFile({ commit }: AugmentedActionContext, params?: {}): {}
+  postFile(
+    { commit }: AugmentedActionContext,
+    params: { file: File }
+  ): Promise<any>
 }
 
 const actions: ActionTree<IUploadState, IUploadState> & UploadActions = {
-  postFile({ commit }, params = {}) {
+  postFile({ commit }, params) {
     return UploadService.upload(params)
       .then((res: ResponseSuccess) => {
         return res

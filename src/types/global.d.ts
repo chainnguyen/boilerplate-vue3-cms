@@ -12,6 +12,13 @@ export type ResponseError = {
   }
 }
 
+export interface IPagination {
+  total: number
+  current_page: number
+}
+
+export type RecordType = 'background' | 'effect_movie'
+
 export interface IFreeObject {
   [key: string]: any
 }

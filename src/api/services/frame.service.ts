@@ -1,12 +1,15 @@
 // Core
 import { ApiService } from '@/api'
 // Types
+import { AxiosResponse } from 'axios'
+import { FrameList, IFrameDetail } from '@/types/views/frame'
+
 type FrameServices = {
-  getList(params?: {}): Promise<any>
-  show(id: string | number, params?: {}): Promise<any>
-  create(params: {}): Promise<any>
-  edit(params: { id: string | number }): Promise<any>
-  remove(id: string | number, params?: {}): Promise<any>
+  getList(params?: {}): Promise<AxiosResponse<FrameList>>
+  show(id: string | number, params?: {}): Promise<AxiosResponse<IFrameDetail>>
+  create(params: {}): Promise<AxiosResponse<any>>
+  edit(params: { id: string | number }): Promise<AxiosResponse<any>>
+  remove(id: string | number, params?: {}): Promise<AxiosResponse<any>>
 }
 
 const BaseUrl = 'frame'

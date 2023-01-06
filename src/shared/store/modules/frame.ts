@@ -4,8 +4,9 @@ import { FrameService } from '@/api/services/frame.service'
 import { FRAME_DATA } from '@/enums/dummy-data.enum'
 // Types
 import { ActionContext, ActionTree, GetterTree, MutationTree } from 'vuex'
-import { ResponseError, ResponseSuccess } from '@/types/global'
+import { IPagination, ResponseError, ResponseSuccess } from '@/types/global'
 import { ICommonModuleState } from '@/types/store'
+import { FrameList, IFrameDetail } from '@/types/views/frame'
 
 // Declare type and value of state
 export interface IFrameState extends ICommonModuleState {}
@@ -24,9 +25,9 @@ const getters: GetterTree<IFrameState, IFrameState> & FrameGetters = {}
 
 // Declare type and value of mutations
 export type FrameMutations<S = IFrameState> = {
-  SET_DETAIL(state: S, payload: {}): void
-  SET_LIST(state: S, payload: {}[]): void
-  SET_PAGINATION(state: S, payload: {}): void
+  SET_DETAIL(state: S, payload: IFrameDetail): void
+  SET_LIST(state: S, payload: FrameList): void
+  SET_PAGINATION(state: S, payload: IPagination): void
 }
 const mutations: MutationTree<IFrameState> & FrameMutations = {
   SET_DETAIL(state, payload) {
@@ -54,10 +55,16 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<IFrameState, IFrameState>, 'commit'>
 
 export type FrameActions = {
-  getFrameList({ commit }: AugmentedActionContext, params?: {}): {}[]
-  createFrame({ commit }: AugmentedActionContext, params: {}): {}
-  updateFrame({ commit }: AugmentedActionContext, params: {}): {}
-  removeFrame({ commit }: AugmentedActionContext, id: string | number): boolean
+  getFrameList({ commit }: AugmentedActionContext, params?: {}): FrameList
+  createFrame({ commit }: AugmentedActionContext, params: {}): Promise<any>
+  updateFrame(
+    { commit }: AugmentedActionContext,
+    params: { id: string | number }
+  ): Promise<any>
+  removeFrame(
+    { commit }: AugmentedActionContext,
+    id: string | number
+  ): Promise<boolean>
   getDetail(
     { commit }: AugmentedActionContext,
     payload: {
@@ -95,7 +102,7 @@ const actions: ActionTree<IFrameState, IFrameState> & FrameActions = {
       })
   },
 
-  updateFrame({ commit }, params = {}) {
+  updateFrame({ commit }, params) {
     return FrameService.edit(params)
       .then((res: ResponseSuccess) => {
         return res
@@ -118,7 +125,9 @@ const actions: ActionTree<IFrameState, IFrameState> & FrameActions = {
   getDetail({ commit }, payload) {
     const { id, params } = payload
 
-    const result = FRAME_DATA.find((i) => i.id === id)
+    const result: IFrameDetail | undefined = FRAME_DATA.find(
+      (i: IFrameDetail) => i.id === id
+    )
     commit('SET_DETAIL', result)
     return true
     // return FrameService.show(id, params).then((res) => {

@@ -40,13 +40,13 @@ const mutations: MutationTree<RootState> & RootMutations = {
 }
 // END - Declare type and value of mutations
 
-const debug: boolean = process.env.NODE_ENV !== 'production'
+const isDebug: boolean = process.env.NODE_ENV !== 'production'
 const store = createStore<RootState>({
   state,
   getters,
   mutations,
   modules,
-  strict: debug,
+  strict: isDebug,
 })
 
 export default store

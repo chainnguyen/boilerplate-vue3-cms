@@ -76,7 +76,7 @@ const components = [
 
 const registerAntDesign = {
   install(app: App<Element>) {
-    components.forEach((component) => {
+    components.forEach((component: any) => {
       app.use(component)
     })
   },

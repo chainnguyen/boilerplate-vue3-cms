@@ -4,8 +4,9 @@ import { EventService } from '@/api/services/event.service'
 import { EVENT_DATA } from '@/enums/dummy-data.enum'
 // Types
 import { ActionContext, ActionTree, GetterTree, MutationTree } from 'vuex'
-import { ResponseError, ResponseSuccess } from '@/types/global'
+import { IPagination, ResponseError, ResponseSuccess } from '@/types/global'
 import { ICommonModuleState } from '@/types/store'
+import { EventList, IEventDetail } from '@/types/views/event'
 
 // Declare type and value of state
 export interface IEventState extends ICommonModuleState {}
@@ -24,9 +25,9 @@ const getters: GetterTree<IEventState, IEventState> & EventGetters = {}
 
 // Declare type and value of mutations
 export type EventMutations<S = IEventState> = {
-  SET_DETAIL(state: S, payload: {}): void
-  SET_LIST(state: S, payload: {}[]): void
-  SET_PAGINATION(state: S, payload: {}): void
+  SET_DETAIL(state: S, payload: IEventDetail): void
+  SET_LIST(state: S, payload: EventList): void
+  SET_PAGINATION(state: S, payload: IPagination): void
 }
 const mutations: MutationTree<IEventState> & EventMutations = {
   SET_DETAIL(state, payload) {
@@ -54,10 +55,16 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<IEventState, IEventState>, 'commit'>
 
 export type EventActions = {
-  getEventList({ commit }: AugmentedActionContext, params?: {}): {}[]
-  createEvent({ commit }: AugmentedActionContext, params: {}): {}
-  updateEvent({ commit }: AugmentedActionContext, params: {}): {}
-  removeEvent({ commit }: AugmentedActionContext, id: string | number): boolean
+  getEventList({ commit }: AugmentedActionContext, params?: {}): EventList
+  createEvent({ commit }: AugmentedActionContext, params: {}): Promise<any>
+  updateEvent(
+    { commit }: AugmentedActionContext,
+    params: { id: string | number }
+  ): Promise<any>
+  removeEvent(
+    { commit }: AugmentedActionContext,
+    id: string | number
+  ): Promise<boolean>
   getDetail(
     { commit }: AugmentedActionContext,
     payload: {
@@ -95,7 +102,7 @@ const actions: ActionTree<IEventState, IEventState> & EventActions = {
       })
   },
 
-  updateEvent({ commit }, params = {}) {
+  updateEvent({ commit }, params) {
     return EventService.edit(params)
       .then((res: ResponseSuccess) => {
         return res
@@ -118,7 +125,9 @@ const actions: ActionTree<IEventState, IEventState> & EventActions = {
   getDetail({ commit }, payload) {
     const { id, params } = payload
 
-    const result = EVENT_DATA.find((i) => i.id === id)
+    const result: IEventDetail | undefined = EVENT_DATA.find(
+      (i: IEventDetail) => i.id === id
+    )
     commit('SET_DETAIL', result)
     return true
 

@@ -4,8 +4,9 @@ import { CollectionService } from '@/api/services/collection.service'
 import { COLLECTION_DATA } from '@/enums/dummy-data.enum'
 // Types
 import { ActionContext, ActionTree, GetterTree, MutationTree } from 'vuex'
-import { ResponseError, ResponseSuccess } from '@/types/global'
+import { IPagination, ResponseError, ResponseSuccess } from '@/types/global'
 import { ICommonModuleState } from '@/types/store'
+import { CollectionList, ICollectionDetail } from '@/types/views/collection'
 
 // Declare type and value of state
 export interface ICollectionState extends ICommonModuleState {}
@@ -25,9 +26,9 @@ const getters: GetterTree<ICollectionState, ICollectionState> &
 
 // Declare type and value of mutations
 export type CollectionMutations<S = ICollectionState> = {
-  SET_DETAIL(state: S, payload: {}): void
-  SET_LIST(state: S, payload: {}[]): void
-  SET_PAGINATION(state: S, payload: {}): void
+  SET_DETAIL(state: S, payload: ICollectionDetail): void
+  SET_LIST(state: S, payload: CollectionList): void
+  SET_PAGINATION(state: S, payload: IPagination): void
 }
 const mutations: MutationTree<ICollectionState> & CollectionMutations = {
   SET_DETAIL(state, payload) {
@@ -55,13 +56,19 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<ICollectionState, ICollectionState>, 'commit'>
 
 export type CollectionActions = {
-  getCollectionList({ commit }: AugmentedActionContext, params?: {}): {}[]
-  createCollection({ commit }: AugmentedActionContext, params: {}): {}
-  updateCollection({ commit }: AugmentedActionContext, params: {}): {}
+  getCollectionList(
+    { commit }: AugmentedActionContext,
+    params?: {}
+  ): CollectionList
+  createCollection({ commit }: AugmentedActionContext, params: {}): Promise<any>
+  updateCollection(
+    { commit }: AugmentedActionContext,
+    params: { id: string | number }
+  ): Promise<any>
   removeCollection(
     { commit }: AugmentedActionContext,
     id: string | number
-  ): boolean
+  ): Promise<boolean>
   getDetail(
     { commit }: AugmentedActionContext,
     payload: {
@@ -99,7 +106,7 @@ const actions: ActionTree<ICollectionState, ICollectionState> &
       })
   },
 
-  updateCollection({ commit }, params = {}) {
+  updateCollection({ commit }, params) {
     return CollectionService.edit(params)
       .then((res: ResponseSuccess) => {
         return res
@@ -122,7 +129,9 @@ const actions: ActionTree<ICollectionState, ICollectionState> &
   getDetail({ commit }, payload) {
     const { id, params } = payload
 
-    const result = COLLECTION_DATA.find((i) => i.id === id)
+    const result: ICollectionDetail | undefined = COLLECTION_DATA.find(
+      (i: ICollectionDetail) => i.id === id
+    )
     commit('SET_DETAIL', result)
     return true
 

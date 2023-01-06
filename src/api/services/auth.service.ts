@@ -1,13 +1,14 @@
 // Core
 import { ApiService } from '@/api'
 // Types
+import { AxiosResponse } from 'axios'
 import { StoreLoginParam, StoreResetPasswordParam } from '@/types/store'
 
 type AuthServices = {
-  login(data: StoreLoginParam): Promise<any>
-  logout(): Promise<any>
-  me(): Promise<any>
-  resetPassword(data: StoreResetPasswordParam): Promise<any>
+  login(data: StoreLoginParam): Promise<AxiosResponse<any>>
+  logout(): Promise<AxiosResponse<any>>
+  me(): Promise<AxiosResponse<any>>
+  resetPassword(data: StoreResetPasswordParam): Promise<AxiosResponse<any>>
 }
 
 export const AuthService: AuthServices = {

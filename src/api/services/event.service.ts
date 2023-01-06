@@ -1,12 +1,15 @@
 // Core
 import { ApiService } from '@/api'
 // Types
+import { AxiosResponse } from 'axios'
+import { EventList, IEventDetail } from '@/types/views/event'
+
 type EventServices = {
-  getList(params?: {}): Promise<any>
-  show(id: string | number, params?: {}): Promise<any>
-  create(params: {}): Promise<any>
-  edit(params: { id: string | number }): Promise<any>
-  remove(id: string | number, params?: {}): Promise<any>
+  getList(params?: {}): Promise<AxiosResponse<EventList>>
+  show(id: string | number, params?: {}): Promise<AxiosResponse<IEventDetail>>
+  create(params: {}): Promise<AxiosResponse<any>>
+  edit(params: { id: string | number }): Promise<AxiosResponse<any>>
+  remove(id: string | number, params?: {}): Promise<AxiosResponse<any>>
 }
 
 const BaseUrl = 'events'

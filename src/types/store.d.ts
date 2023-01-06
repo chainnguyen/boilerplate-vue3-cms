@@ -1,3 +1,5 @@
+import { IPagination } from '@/types/global'
+
 export type StoreToken = {
   token: string
   expires: number | Date | undefined
@@ -27,5 +29,5 @@ export type StoreUserProfile =
 export interface ICommonModuleState {
   list: {}[] | null
   detail: {} | null
-  pagination: {} | null
+  pagination: IPagination | null
 }

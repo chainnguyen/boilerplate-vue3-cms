@@ -1,12 +1,14 @@
 // Core
 import { ApiService } from '@/api'
 // Types
+import { AxiosResponse } from 'axios'
+
 type UploadServices = {
-  upload(form: File): Promise<any>
+  upload(params: { file: File }): Promise<AxiosResponse<any>>
 }
 
 export const UploadService: UploadServices = {
-  async upload(form) {
-    return ApiService.post('/upload', form)
+  async upload(params) {
+    return ApiService.post('/upload', params)
   },
 }

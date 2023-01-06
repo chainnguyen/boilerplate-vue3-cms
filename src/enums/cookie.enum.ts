@@ -1,4 +1,4 @@
-export enum COOKIES_KEY {
-  token = 'vue3_cms_token',
-  expires = 30, // 30 days
+export const COOKIES_KEY = {
+  token: '__vue3_cms_tkn',
+  expires: 30, // 30 days
 }
