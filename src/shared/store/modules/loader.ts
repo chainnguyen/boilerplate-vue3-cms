@@ -1,31 +1,32 @@
 // Types
 import { ActionContext, ActionTree, GetterTree, MutationTree } from 'vuex'
+import { IModulesStates } from '@/types/store'
 
 // Declare type and value of state
-export interface ILoaderState {
+export type LoaderState = {
   loading: boolean
   requestsPending: number
 }
-const initialState: ILoaderState = {
+const initialState: LoaderState = {
   loading: false,
   requestsPending: 0,
 }
-export const state: ILoaderState = { ...initialState }
+const state: LoaderState = { ...initialState }
 // END - Declare type and value of state
 
 // Declare type and value of getters
 export type LoaderGetters = {}
-const getters: GetterTree<ILoaderState, ILoaderState> & LoaderGetters = {}
+const getters: GetterTree<LoaderState, IModulesStates> & LoaderGetters = {}
 // END - Declare type and value of getters
 
 // Declare type and value of mutations
-export type LoaderMutations<S = ILoaderState> = {
+export type LoaderMutations<S = LoaderState> = {
   show(state: S): void
   hide(state: S): void
   pending(state: S): void
   done(state: S): void
 }
-const mutations: MutationTree<ILoaderState> & LoaderMutations = {
+const mutations: MutationTree<LoaderState> & LoaderMutations = {
   show(state) {
     state.loading = true
   },
@@ -61,7 +62,7 @@ type AugmentedActionContext = {
     key: K,
     payload: Parameters<LoaderGetters[K]>[1]
   ): ReturnType<LoaderGetters[K]>
-} & Omit<ActionContext<ILoaderState, ILoaderState>, 'commit'>
+} & Omit<ActionContext<LoaderState, IModulesStates>, 'commit'>
 
 export type LoaderActions = {
   show({ commit }: AugmentedActionContext): void
@@ -70,7 +71,7 @@ export type LoaderActions = {
   done({ commit }: AugmentedActionContext): void
 }
 
-const actions: ActionTree<ILoaderState, ILoaderState> & LoaderActions = {
+const actions: ActionTree<LoaderState, IModulesStates> & LoaderActions = {
   show({ commit }) {
     commit('show')
   },

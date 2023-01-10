@@ -16,10 +16,10 @@ import { COOKIES_KEY } from '@/enums/cookie.enum'
 const { t } = i18n.global
 
 const instance: AxiosInstance = axios.create({
-  baseURL: process.env.VITE_APP_AXIOS_BASE_URL,
+  baseURL: import.meta.env.VITE_APP_AXIOS_BASE_URL as string,
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
+    ContentType: 'application/json;charset=UTF-8',
   },
   timeout: 30000, // request timeout
 })

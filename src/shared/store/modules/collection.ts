@@ -5,7 +5,7 @@ import { COLLECTION_DATA } from '@/enums/dummy-data.enum'
 // Types
 import { ActionContext, ActionTree, GetterTree, MutationTree } from 'vuex'
 import { IPagination, ResponseError, ResponseSuccess } from '@/types/global'
-import { ICommonModuleState } from '@/types/store'
+import { ICommonModuleState, IModulesStates } from '@/types/store'
 import { CollectionList, ICollectionDetail } from '@/types/views/collection'
 
 // Declare type and value of state
@@ -15,12 +15,12 @@ const initialState: ICollectionState = {
   detail: null,
   pagination: null,
 }
-export const state: ICollectionState = { ...initialState }
+const state: ICollectionState = { ...initialState }
 // END - Declare type and value of state
 
 // Declare type and value of getters
 export type CollectionGetters = {}
-const getters: GetterTree<ICollectionState, ICollectionState> &
+const getters: GetterTree<ICollectionState, IModulesStates> &
   CollectionGetters = {}
 // END - Declare type and value of getters
 
@@ -53,7 +53,7 @@ type AugmentedActionContext = {
     key: K,
     payload: Parameters<CollectionGetters[K]>[1]
   ): ReturnType<CollectionGetters[K]>
-} & Omit<ActionContext<ICollectionState, ICollectionState>, 'commit'>
+} & Omit<ActionContext<ICollectionState, IModulesStates>, 'commit'>
 
 export type CollectionActions = {
   getCollectionList(
@@ -78,7 +78,7 @@ export type CollectionActions = {
   ): boolean
 }
 
-const actions: ActionTree<ICollectionState, ICollectionState> &
+const actions: ActionTree<ICollectionState, IModulesStates> &
   CollectionActions = {
   getCollectionList({ commit }, params = {}) {
     commit('SET_LIST', COLLECTION_DATA)

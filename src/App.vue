@@ -1,42 +1,47 @@
 <template>
-  <div>
-    <a
-      href="https://vuejs.org/"
-      target="_blank">
-      <img
-        src="./assets/images/vue.svg"
-        class="logo vue"
-        alt="Vue logo" />
-    </a>
+  <div id="app">
+    <component
+      :is="layout"
+      v-if="layout" />
+
+    <loading-component v-if="loading" />
   </div>
-  <HelloWorld />
 </template>
 
 <script lang="ts">
 // Composition
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 // Components
-import HelloWorld from './shared/components/HelloWorld.vue'
+import LoadingComponent from '@/shared/components/Loading.vue'
+// Others
+import { useStore } from 'vuex'
 
 export default defineComponent({
-  name: 'App',
+  name: 'Application',
 
   components: {
-    HelloWorld,
+    LoadingComponent,
+    auth: () => import(/* webpackChunkName: "auth" */ '@/layouts/Auth.vue'),
+    default: () =>
+      import(/* webpackChunkName: "default" */ '@/layouts/Default.vue'),
+  },
+
+  setup() {
+    const store = useStore()
+    const layout = computed<string>(() => store.getters['layout'])
+    const loading = computed<boolean>(() => store.state['loader/loading'])
+
+    return {
+      layout,
+      loading,
+    }
   },
 })
 </script>
 
 <style lang="scss" scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+#app {
+  max-height: 100vh;
+  overflow: hidden;
 }
 </style>

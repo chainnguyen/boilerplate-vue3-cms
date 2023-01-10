@@ -3,17 +3,29 @@ import { createStore, ModuleTree, GetterTree, MutationTree } from 'vuex'
 // Modules
 import auth from '@/shared/store/modules/auth'
 import loader from '@/shared/store/modules/loader'
+import language from '@/shared/store/modules/language'
+import upload from '@/shared/store/modules/upload'
+import event from '@/shared/store/modules/event'
+import frame from '@/shared/store/modules/frame'
+import collection from '@/shared/store/modules/collection'
+// Types
+import { IModulesStates } from '@/types/store'
 
-const modules: ModuleTree<any> = {
+const modules: ModuleTree<IModulesStates> = {
   auth,
   loader,
+  language,
+  upload,
+  event,
+  frame,
+  collection,
 }
 
 // Declare type and value of state
 export type RootState = {
   layout: string | null
 }
-const state: RootState = {
+const state: RootState & Partial<IModulesStates> = {
   layout: null,
 }
 // END - Declare type and value of state
@@ -40,7 +52,7 @@ const mutations: MutationTree<RootState> & RootMutations = {
 }
 // END - Declare type and value of mutations
 
-const isDebug: boolean = process.env.NODE_ENV !== 'production'
+const isDebug: boolean = import.meta.env.NODE_ENV !== 'production'
 const store = createStore<RootState>({
   state,
   getters,

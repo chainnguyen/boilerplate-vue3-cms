@@ -5,7 +5,7 @@ import { FRAME_DATA } from '@/enums/dummy-data.enum'
 // Types
 import { ActionContext, ActionTree, GetterTree, MutationTree } from 'vuex'
 import { IPagination, ResponseError, ResponseSuccess } from '@/types/global'
-import { ICommonModuleState } from '@/types/store'
+import { ICommonModuleState, IModulesStates } from '@/types/store'
 import { FrameList, IFrameDetail } from '@/types/views/frame'
 
 // Declare type and value of state
@@ -15,12 +15,12 @@ const initialState: IFrameState = {
   detail: null,
   pagination: null,
 }
-export const state: IFrameState = { ...initialState }
+const state: IFrameState = { ...initialState }
 // END - Declare type and value of state
 
 // Declare type and value of getters
 export type FrameGetters = {}
-const getters: GetterTree<IFrameState, IFrameState> & FrameGetters = {}
+const getters: GetterTree<IFrameState, IModulesStates> & FrameGetters = {}
 // END - Declare type and value of getters
 
 // Declare type and value of mutations
@@ -52,7 +52,7 @@ type AugmentedActionContext = {
     key: K,
     payload: Parameters<FrameGetters[K]>[1]
   ): ReturnType<FrameGetters[K]>
-} & Omit<ActionContext<IFrameState, IFrameState>, 'commit'>
+} & Omit<ActionContext<IFrameState, IModulesStates>, 'commit'>
 
 export type FrameActions = {
   getFrameList({ commit }: AugmentedActionContext, params?: {}): FrameList
@@ -74,7 +74,7 @@ export type FrameActions = {
   ): boolean
 }
 
-const actions: ActionTree<IFrameState, IFrameState> & FrameActions = {
+const actions: ActionTree<IFrameState, IModulesStates> & FrameActions = {
   getFrameList({ commit }, params = {}) {
     commit('SET_LIST', FRAME_DATA)
     commit('SET_PAGINATION', {

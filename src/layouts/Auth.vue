@@ -1,16 +1,16 @@
 <template>
-  <main-components />
+  <main-component />
 </template>
 
 <script lang="ts">
 // Composition
 import { defineComponent } from 'vue'
 // Components
-import MainComponents from '@/shared/components/Main'
+import MainComponent from '@/shared/components/Main.vue'
 
 export default defineComponent({
   name: 'AuthLayout',
 
-  components: { MainComponents },
+  components: { MainComponent },
 })
 </script>

@@ -1,4 +1,11 @@
 import { IPagination } from '@/types/global'
+import { AuthState } from '@/shared/store/modules/auth'
+import { LoaderState } from '@/shared/store/modules/loader'
+import { LanguageState } from '@/shared/store/modules/language'
+import { UploadState } from '@/shared/store/modules/upload'
+import { IEventState } from '@/shared/store/modules/event'
+import { IFrameState } from '@/shared/store/modules/frame'
+import { ICollectionState } from '@/shared/store/modules/collection'
 
 export type StoreToken = {
   token: string
@@ -30,4 +37,14 @@ export interface ICommonModuleState {
   list: {}[] | null
   detail: {} | null
   pagination: IPagination | null
+}
+
+export interface IModulesStates {
+  auth: AuthState
+  loader: LoaderState
+  language: LanguageState
+  upload: UploadState
+  event: IEventState
+  frame: IFrameState
+  collection: ICollectionState
 }

@@ -6,7 +6,12 @@ import { COOKIES_KEY } from '@/enums/cookie.enum'
 import { ACCOUNT } from '@/enums/account.enum'
 // Types
 import { ActionContext, ActionTree, GetterTree, MutationTree } from 'vuex'
-import { StoreLoginParam, StoreToken, StoreUserProfile } from '@/types/store'
+import {
+  IModulesStates,
+  StoreLoginParam,
+  StoreToken,
+  StoreUserProfile,
+} from '@/types/store'
 
 // Declare type and value of state
 export type AuthState = {
@@ -15,9 +20,11 @@ export type AuthState = {
 }
 const initialState: AuthState = {
   bearerToken: null,
-  userProfile: {},
+  userProfile: {
+    role: 'admin',
+  },
 }
-export const state: AuthState = {
+const state: AuthState = {
   ...initialState,
   bearerToken: Cookie.get(COOKIES_KEY.token),
 }
@@ -25,7 +32,7 @@ export const state: AuthState = {
 
 // Declare type and value of getters
 export type AuthGetters = {}
-const getters: GetterTree<AuthState, AuthState> & AuthGetters = {}
+const getters: GetterTree<AuthState, IModulesStates> & AuthGetters = {}
 // END - Declare type and value of getters
 
 // Declare type and value of mutations
@@ -41,7 +48,7 @@ const mutations: MutationTree<AuthState> & AuthMutations = {
     Cookie.set(COOKIES_KEY.token, token, {
       expires,
       // requires a secure protocol (https) when transmitting cookies
-      secure: process.env.NODE_ENV === 'production',
+      secure: import.meta.env.NODE_ENV === 'production',
       // allowing to control whether the browser is sending a cookie along with cross-site requests
       sameSite: 'lax',
     })
@@ -67,7 +74,7 @@ type AugmentedActionContext = {
     key: K,
     payload: Parameters<AuthGetters[K]>[1]
   ): ReturnType<AuthGetters[K]>
-} & Omit<ActionContext<AuthState, AuthState>, 'commit'>
+} & Omit<ActionContext<AuthState, IModulesStates>, 'commit'>
 
 export type AuthActions = {
   userLogin(
@@ -77,7 +84,7 @@ export type AuthActions = {
   userLogout({ commit }: AugmentedActionContext): boolean
   userProfile({ state, commit }: AugmentedActionContext): boolean
 }
-const actions: ActionTree<AuthState, AuthState> & AuthActions = {
+const actions: ActionTree<AuthState, IModulesStates> & AuthActions = {
   userLogin({ commit }, params) {
     // LOGIN DUMMY
     const accountExist: boolean =

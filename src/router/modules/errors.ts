@@ -17,7 +17,7 @@ export default [
   },
   // Not found
   {
-    path: '/:catchAll(.*)',
+    path: '/not-found',
     name: 'not_found',
     meta: {},
     component: page('error/NotFound.vue'),

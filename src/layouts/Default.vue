@@ -1,16 +1,16 @@
 <template>
   <a-layout>
-    <!--    <header-components/>-->
+    <!--    <header-component/>-->
 
     <a-layout
       id="components-layout-demo-custom-trigger"
       :class="{ 'layout-fold': collapsed }">
-      <!--      <sidebar-components :collapsed.sync="collapsed"/>-->
+      <!--      <sidebar-component :collapsed.sync="collapsed"/>-->
       <a-layout id="main-layout">
-        <!--        <breadcrumb-components/>-->
+        <!--        <breadcrumb-component/>-->
 
         <a-config-provider :locale="locale">
-          <!--          <main-components/>-->
+          <main-component />
         </a-config-provider>
       </a-layout>
     </a-layout>
@@ -20,17 +20,22 @@
 <script lang="ts">
 // Composition
 import { defineComponent, ref } from 'vue'
-// import SidebarComponents from '@/shared/components/layout/Sidebar'
-// import HeaderComponents from '@/shared/components/layout/Header'
-// import MainComponents from '@/shared/components/Main'
-// import BreadcrumbComponents from '@/shared/components/common/Breadcrumb.vue'
+// import SidebarComponent from '@/shared/components/layout/Sidebar.vue'
+// import HeaderComponent from '@/shared/components/layout/Header.vue'
+import MainComponent from '@/shared/components/Main.vue'
+// import BreadcrumbComponent from '@/shared/components/common/Breadcrumb.vue'
 // Others
 import vi_VN from 'ant-design-vue/es/locale/vi_VN'
 
 export default defineComponent({
   name: 'DefaultLayout',
 
-  components: {},
+  components: {
+    // HeaderComponent,
+    // SidebarComponent,
+    MainComponent,
+    // BreadcrumbComponent
+  },
 
   setup() {
     const collapsed = ref<boolean>(false)

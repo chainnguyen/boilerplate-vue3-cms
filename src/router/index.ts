@@ -1,12 +1,15 @@
+// Core
 import {
   createRouter,
   createWebHistory,
   NavigationGuardNext,
   RouteLocationNormalized,
+  RouteRecordNormalized,
 } from 'vue-router'
+// Others
 import { routes } from '@/router/routes'
-// import store from '@/shared/store'
-// import head from 'lodash-es/head'
+import store from '@/shared/store'
+import head from 'lodash-es/head'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_ROUTER_BASE as string),
@@ -27,8 +30,10 @@ const beforeEach = (
   from: RouteLocationNormalized,
   next: NavigationGuardNext
 ) => {
-  // const currentRoute = head(to.matched)
-  // store.commit('SET_LAYOUT', { layout: currentRoute.meta.layout || 'default' })
+  const currentRoute: RouteRecordNormalized | undefined = head(to.matched)
+  store.commit('SET_LAYOUT', {
+    layout: (currentRoute && currentRoute.meta.layout) || 'default',
+  })
   next()
 }
 

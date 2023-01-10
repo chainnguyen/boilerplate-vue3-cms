@@ -5,7 +5,7 @@ import { EVENT_DATA } from '@/enums/dummy-data.enum'
 // Types
 import { ActionContext, ActionTree, GetterTree, MutationTree } from 'vuex'
 import { IPagination, ResponseError, ResponseSuccess } from '@/types/global'
-import { ICommonModuleState } from '@/types/store'
+import { ICommonModuleState, IModulesStates } from '@/types/store'
 import { EventList, IEventDetail } from '@/types/views/event'
 
 // Declare type and value of state
@@ -15,12 +15,12 @@ const initialState: IEventState = {
   detail: null,
   pagination: null,
 }
-export const state: IEventState = { ...initialState }
+const state: IEventState = { ...initialState }
 // END - Declare type and value of state
 
 // Declare type and value of getters
 export type EventGetters = {}
-const getters: GetterTree<IEventState, IEventState> & EventGetters = {}
+const getters: GetterTree<IEventState, IModulesStates> & EventGetters = {}
 // END - Declare type and value of getters
 
 // Declare type and value of mutations
@@ -52,7 +52,7 @@ type AugmentedActionContext = {
     key: K,
     payload: Parameters<EventGetters[K]>[1]
   ): ReturnType<EventGetters[K]>
-} & Omit<ActionContext<IEventState, IEventState>, 'commit'>
+} & Omit<ActionContext<IEventState, IModulesStates>, 'commit'>
 
 export type EventActions = {
   getEventList({ commit }: AugmentedActionContext, params?: {}): EventList
@@ -74,7 +74,7 @@ export type EventActions = {
   ): boolean
 }
 
-const actions: ActionTree<IEventState, IEventState> & EventActions = {
+const actions: ActionTree<IEventState, IModulesStates> & EventActions = {
   getEventList({ commit }, params = {}) {
     commit('SET_LIST', EVENT_DATA)
     commit('SET_PAGINATION', {

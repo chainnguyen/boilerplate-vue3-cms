@@ -3,20 +3,21 @@ import { UploadService } from '@/api/services/upload.service'
 // Types
 import { ActionContext, ActionTree, GetterTree, MutationTree } from 'vuex'
 import { ResponseError, ResponseSuccess } from '@/types/global'
+import { IModulesStates } from '@/types/store'
 
 // Declare type and value of state
-export interface IUploadState {}
-export const state: IUploadState = {}
+export type UploadState = {}
+const state: UploadState = {}
 // END - Declare type and value of state
 
 // Declare type and value of getters
 export type UploadGetters = {}
-const getters: GetterTree<IUploadState, IUploadState> & UploadGetters = {}
+const getters: GetterTree<UploadState, IModulesStates> & UploadGetters = {}
 // END - Declare type and value of getters
 
 // Declare type and value of mutations
-export type UploadMutations<S = IUploadState> = {}
-const mutations: MutationTree<IUploadState> & UploadMutations = {}
+export type UploadMutations<S = UploadState> = {}
+const mutations: MutationTree<UploadState> & UploadMutations = {}
 // END - Declare type and value of mutations
 
 // Declare type and value of actions
@@ -29,7 +30,7 @@ type AugmentedActionContext = {
     key: K,
     payload: Parameters<UploadGetters[K]>[1]
   ): ReturnType<UploadGetters[K]>
-} & Omit<ActionContext<IUploadState, IUploadState>, 'commit'>
+} & Omit<ActionContext<UploadState, IModulesStates>, 'commit'>
 
 export type UploadActions = {
   postFile(
@@ -38,7 +39,7 @@ export type UploadActions = {
   ): Promise<any>
 }
 
-const actions: ActionTree<IUploadState, IUploadState> & UploadActions = {
+const actions: ActionTree<UploadState, IModulesStates> & UploadActions = {
   postFile({ commit }, params) {
     return UploadService.upload(params)
       .then((res: ResponseSuccess) => {

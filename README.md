@@ -18,19 +18,19 @@ yarn | npm install
 ## Create a global <code>.env.{development|staging|production}</code> file from .env.example
 <code>.env.development</code>
 ```
-VITE_ROUTER_BASE=./
+VITE_ROUTER_BASE=/
 VITE_APP_AXIOS_BASE_URL=https://localhost:8080/dev
 ```
 
 <code>.env.staging</code>
 ```
-VITE_ROUTER_BASE=./
+VITE_ROUTER_BASE=/
 VITE_APP_AXIOS_BASE_URL=https://localhost:8080/stag
 ```
 
 <code>.env.production</code>
 ```
-VITE_ROUTER_BASE=./
+VITE_ROUTER_BASE=/
 VITE_APP_AXIOS_BASE_URL=https://localhost:8080/prod
 ```
 
