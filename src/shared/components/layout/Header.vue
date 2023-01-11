@@ -59,33 +59,55 @@
 import { defineComponent, ref, computed } from 'vue'
 // Others
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { LOCALE } from '@/enums/locale.enum'
 // Types
 import { StoreUserProfile } from '@/types/store'
 
 export default defineComponent({
-  name: 'HeaderComponent',
+  name: 'HeaderLayout',
 
   setup() {
     const store = useStore()
+    const router = useRouter()
+
     const defaultAvatar = ref<string>(
       require('@/assets/images/noimage_user.svg')
     )
 
     const userProfile = computed<StoreUserProfile>(
-      () => store.getters['auth/userProfile']
+      () => store.state['auth/userProfile']
     )
-    const userAvatar = computed<string>(() => {
-      return userProfile.value &&
-        Object.keys(userProfile.value).length &&
-        userProfile.value.avatar
+    const userAvatar = computed<string>(() =>
+      userProfile.value &&
+      Object.keys(userProfile.value).length &&
+      userProfile.value.avatar
         ? userProfile.value.avatar
         : defaultAvatar.value
-    })
+    )
 
-    const changeLanguage = (lang: string) => {}
+    const changeLanguage = (lang: string): void => {
+      // If the language does not exist will do nothing
+      if (!Object.values(LOCALE).includes(lang)) return
 
-    const handleLogout = () => {}
+      // const htmlLang: string | undefined = Object.keys(LOCALE).find(
+      //   (key: string) => LOCALE[key] === lang
+      // )
+      store.dispatch('language/setLanguage', lang)
+      // document.querySelector('html').setAttribute('lang', htmlLang)
+    }
+
+    const handleLogout = (): void => {
+      store
+        .dispatch('auth/userLogout')
+        .then((res) => {
+          if (res) {
+            // this.onSuccess(this.$t('completion'), this.$t('logout_success'))
+            router.push({ name: 'auth.login' })
+          }
+        })
+        .catch((err) => err)
+    }
 
     return {
       defaultAvatar,

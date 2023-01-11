@@ -1,121 +1,20 @@
 <template>
-  <ValidationProvider
-    ref="upload"
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="!valueModel ? rules : null"
-    :class="classContainer"
-    v-slot="{ errors }">
-    <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-      :class="{ 'font-weight-normal': hiddenAsterisk }">
-      {{ label }}
-      <span
-        v-if="rules.includes('required') && !hiddenAsterisk"
-        class="required"
-        v-text="'*'" />
-    </label>
-
-    <div
-      class="position-relative d-flex"
-      :class="[
-        errors[0] ? 'has_error' : null,
-        previewAlign === 'bottom' ? 'flex-column' : null,
-      ]">
-      <div
-        class="flex-shrink-0 w-100"
-        :class="[previewAlign === 'bottom' ? 'mb-2' : 'mr-2']">
-        <!-- Field -->
-        <label
-          :for="`${vid}_upload`"
-          :title="inputName"
-          :class="{ 'ant-btn-loading': isUploading }"
-          class="file-button ant-btn">
-          <a-icon
-            v-if="isUploading"
-            type="loading" />
-          <span
-            class="text-ellipsis pr-2"
-            v-text="inputName" />
-
-          <a-icon
-            v-if="!valueModel"
-            type="upload"
-            class="flex-shrink-0" />
-          <a-icon
-            v-else
-            type="delete"
-            class="flex-shrink-0"
-            @click.prevent="deleteFile" />
-        </label>
-
-        <input
-          type="file"
-          :id="`${vid}_upload`"
-          :disabled="valueModel || isUploading"
-          :accept="acceptableFileTypes"
-          class="file-input"
-          @change="handleChange" />
-
-        <!-- Message Error -->
-        <span
-          v-if="errors[0]"
-          class="errors"
-          v-html="errors[0]" />
-      </div>
-
-      <template v-if="isPreview">
-        <!-- Preview image -->
-        <template v-if="!isAudio">
-          <figure
-            v-if="(valueModel && valueModel.path) || previewSrc"
-            class="preview-image">
-            <image-zoom
-              :src="valueModel.path || previewSrc"
-              :alt="valueModel.name || 'preview-image'" />
-          </figure>
-        </template>
-
-        <!-- Preview music -->
-        <template v-else>
-          <audio
-            v-if="(valueModel && valueModel.path) || previewSrc"
-            ref="audio"
-            class="preview-music w-100"
-            controls>
-            <source :src="valueModel.path || previewSrc" />
-          </audio>
-        </template>
-      </template>
-    </div>
-  </ValidationProvider>
+  <h4>InputUpload component</h4>
 </template>
 
-<script>
-// Store
-import { mapActions } from 'vuex'
+<script lang="ts">
+// Composition
+import { defineComponent, ref, computed, watch } from 'vue'
 // Components
-import ImageZoom from '@/shared/components/common/ImageZoom'
+import ImageZoom from '@/shared/components/common/ImageZoom.vue'
 // Others
-import {
-  toBase64,
-  checkImageSizeByMb,
-  handleRequestErrorMessage,
-} from '@/shared/helpers'
+import { useStore } from 'vuex'
 
-export default {
-  name: 'InputUploadComponent',
+export default defineComponent({
+  name: 'InputUpload',
 
   components: {
     ImageZoom,
-  },
-
-  model: {
-    prop: 'value',
-    event: 'change',
   },
 
   props: {
@@ -140,81 +39,90 @@ export default {
     disabled: { type: Boolean, default: false },
   },
 
-  data() {
-    return {
-      previewSrc: null,
-      isUploading: false,
+  setup(props, { emit }) {
+    const store = useStore()
+
+    const previewSrc = ref<string | null>(null)
+    const isUploading = ref<boolean>(false)
+    const uploadRef = ref<InstanceType<typeof HTMLDivElement> | null>(null)
+
+    // Getter & Setter
+    const valueModel = ref<object | string | null>(null)
+    watch(
+      () => props.value,
+      (val) => {
+        valueModel.value = val
+      },
+      { immediate: true }
+    )
+    watch(valueModel, (val) => {
+      if (val && props.isPreview && props.isAudio && uploadRef.value) {
+        uploadRef.value?.load()
+      }
+      emit('update:value', val)
+    })
+    // END - Getter & Setter
+
+    const inputName = computed<string>(() => {
+      if (!valueModel.value) return props.placeholder
+
+      if (typeof valueModel.value === 'object') {
+        return valueModel.value?.name
+      }
+      return valueModel.value
+    })
+
+    const deleteFile = () => {
+      valueModel.value = null
+      previewSrc.value = null
     }
-  },
 
-  computed: {
-    valueModel: {
-      get() {
-        return this.$props.value
-      },
-      set(newVal) {
-        this.$emit('change', newVal)
-      },
-    },
+    const handlePostFile = (file: File) => {
+      store
+        .dispatch('upload/postFile', { upload_file: file })
+        .then((res: any) => {
+          if (res.success) {
+            valueModel.value = res.data
+            previewSrc.value = res.data.path
+          } else {
+            // handleRequestErrorMessage(res)
+          }
+        })
+    }
 
-    inputName() {
-      if (!this.valueModel) return this.$props.placeholder
-
-      if (typeof this.valueModel === 'object') {
-        return this.valueModel.name
-      }
-      return this.valueModel
-    },
-  },
-
-  watch: {
-    valueModel(val) {
-      if (val && this.isPreview && this.isAudio && this.$refs.audio) {
-        this.$refs.audio.load()
-      }
-    },
-  },
-
-  methods: {
-    ...mapActions('upload', ['postFile']),
-
-    deleteFile() {
-      this.valueModel = null
-      this.previewSrc = null
-    },
-
-    async handleChange(event) {
-      const files = event.target.files || event.dataTransfer.files
+    const handleChange = async ($event: any) => {
+      const files: File[] = $event.target.files || $event.dataTransfer.files
       // If the file isn't an image nothing happens
       // Check size image before send server
-      if (!files.length || checkImageSizeByMb(files[0], this.$props.sizeLimit))
-        return
+      // if (!files.length || checkImageSizeByMb(files[0], props.sizeLimit))
+      //   return
 
-      this.isUploading = true
+      if (!files.length) return
 
-      if (this.$props.returnType !== 'object') {
-        this.valueModel = files[0]
-        this.previewSrc = await toBase64(files[0])
+      isUploading.value = true
+
+      if (props.returnType !== 'object') {
+        valueModel.value = files[0]
+        // previewSrc.value = await toBase64(files[0])
       } else {
-        this.handlePostFile(files[0])
+        handlePostFile(files[0])
       }
 
-      this.isUploading = false
-      this.$refs.upload.reset()
-    },
+      isUploading.value = false
+      uploadRef.value?.reset()
+    }
 
-    handlePostFile(file) {
-      this.postFile({ upload_file: file }).then((res) => {
-        if (res.success) {
-          this.valueModel = res.data
-          this.previewSrc = res.data.path
-        } else {
-          handleRequestErrorMessage(res)
-        }
-      })
-    },
+    return {
+      previewSrc,
+      isUploading,
+      valueModel,
+      inputName,
+
+      deleteFile,
+      handleChange,
+    }
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

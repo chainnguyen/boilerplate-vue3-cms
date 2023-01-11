@@ -1,12 +1,12 @@
 <template>
   <div class="main-container">
     <!-- Block: Page title -->
-    <h1>Event list</h1>
+    <page-title title="Event list" />
 
     <!-- Block: Main content -->
     <section class="main-container_content">
       <!-- Section: Search -->
-      <event-search-component />
+      <event-search />
     </section>
   </div>
 </template>
@@ -14,21 +14,23 @@
 <script lang="ts">
 // Composition
 import { defineComponent } from 'vue'
-// Store
-// import store from '@/shared/store'
 // Components
-import EventSearchComponent from '@/shared/components/management_event/EventSearch.vue'
+import PageTitle from '@/shared/components/common/PageTitle.vue'
+import EventSearch from '@/shared/components/management_event/EventSearch.vue'
 // Others
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'EventPage',
 
   components: {
-    EventSearchComponent,
+    PageTitle,
+    EventSearch,
   },
 
   setup() {
-    return {}
+    const store = useStore()
+    return { store }
   },
 })
 </script>

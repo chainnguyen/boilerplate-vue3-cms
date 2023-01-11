@@ -1,4 +1,6 @@
-export const STATUS = [
+import { StandardObject } from '@/types/global'
+
+export const STATUS: StandardObject[] = [
   {
     id: 0,
     name: 'Applying',
@@ -11,7 +13,7 @@ export const STATUS = [
   },
 ]
 
-export const FRAME_TYPE = [
+export const FRAME_TYPE: StandardObject[] = [
   {
     id: 0,
     name: 'Effect-movie',
@@ -24,4 +26,4 @@ export const FRAME_TYPE = [
   },
 ]
 
-export const FORMAT_DATE = 'YYYY-MM-DD'
+export const FORMAT_DATE: string = 'YYYY-MM-DD'

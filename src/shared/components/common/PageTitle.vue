@@ -17,7 +17,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'PageTitleComponent',
+  name: 'PageTitle',
 
   props: {
     title: { type: String, required: true, default: '' },

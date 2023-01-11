@@ -1,12 +1,12 @@
 <template>
   <div class="main-container">
     <!-- Block: Page title -->
-    <h1>Collection list</h1>
+    <page-title title="Collection list" />
 
     <!-- Block: Main content -->
     <section class="main-container_content">
       <!-- Section: Search -->
-      <collection-search-component />
+      <collection-search />
     </section>
   </div>
 </template>
@@ -14,21 +14,23 @@
 <script lang="ts">
 // Composition
 import { defineComponent } from 'vue'
-// Store
-// import store from '@/shared/store'
 // Components
-import CollectionSearchComponent from '@/shared/components/management_collection/CollectionSearch.vue'
+import PageTitle from '@/shared/components/common/PageTitle.vue'
+import CollectionSearch from '@/shared/components/management_collection/CollectionSearch.vue'
 // Others
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'CollectionPage',
 
   components: {
-    CollectionSearchComponent,
+    PageTitle,
+    CollectionSearch,
   },
 
   setup() {
-    return {}
+    const store = useStore()
+    return { store }
   },
 })
 </script>

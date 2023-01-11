@@ -22,3 +22,9 @@ export type RecordType = 'background' | 'effect_movie'
 export interface IFreeObject {
   [key: string]: any
 }
+
+export type StandardObject = {
+  id: string | number
+  name: string
+  value: string
+}

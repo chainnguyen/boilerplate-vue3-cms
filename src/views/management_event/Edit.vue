@@ -1,30 +1,33 @@
 <template>
   <div>
     <!-- Block: Page title -->
-    <h1>Edit Event</h1>
+    <page-title title="Edit Event" />
 
     <!-- Block: Main content -->
-    <event-form-component />
+    <event-form update-mode />
   </div>
 </template>
 
 <script lang="ts">
 // Composition
 import { defineComponent } from 'vue'
-// Store
-// import store from '@/shared/store'
 // Components
-import EventFormComponent from '@/shared/components/management_event/EventForm.vue'
+import PageTitle from '@/shared/components/common/PageTitle.vue'
+import EventForm from '@/shared/components/management_event/EventForm.vue'
+// Others
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'EditEventPage',
 
   components: {
-    EventFormComponent,
+    PageTitle,
+    EventForm,
   },
 
   setup() {
-    return {}
+    const store = useStore()
+    return { store }
   },
 })
 </script>

@@ -1,50 +1,13 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="rules + '|not_emoji'"
-    :class="classContainer"
-    v-slot="{ errors }">
-    <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-      :class="{ 'font-weight-normal': hiddenAsterisk }">
-      {{ label }}
-      <span
-        v-if="rules.includes('required') && !hiddenAsterisk"
-        class="required"
-        v-text="'*'" />
-    </label>
-
-    <div :class="{ has_error: errors[0] }">
-      <a-textarea
-        :disabled="disabled"
-        :value="value"
-        :class="classInput"
-        :placeholder="placeholder"
-        :readOnly="!autofill || readonly"
-        @input="handleType($event)"
-        @focus="handleFocus" />
-
-      <!-- Message Error -->
-      <span
-        v-if="errors[0]"
-        class="errors"
-        v-html="errors[0]" />
-    </div>
-  </ValidationProvider>
+  <h4>InputTextarea component</h4>
 </template>
 
-<script>
-export default {
-  name: 'InputTextareaComponent',
+<script lang="ts">
+// Composition
+import { defineComponent } from 'vue'
 
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
+export default defineComponent({
+  name: 'InputTextarea',
 
   props: {
     vid: { type: String, default: '' },
@@ -62,19 +25,24 @@ export default {
     maxlength: { type: [String, Number], default: '' },
   },
 
-  methods: {
-    handleType($event) {
-      if (this.$props.disabled) return
-      this.$emit('change', $event.target.value)
-    },
+  setup(props, { emit }) {
+    const handleType = ($event: any): void => {
+      if (props.disabled) return
+      emit('change', $event.target.value)
+    }
 
-    handleFocus($event) {
-      if (!this.autofill) {
+    const handleFocus = ($event: any): void => {
+      if (!props.autofill) {
         $event.target.removeAttribute('readonly')
       }
-    },
+    }
+
+    return {
+      handleType,
+      handleFocus,
+    }
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

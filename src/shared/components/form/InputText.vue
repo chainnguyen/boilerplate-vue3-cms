@@ -1,69 +1,13 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="rules"
-    :class="classContainer"
-    v-slot="{ errors }">
-    <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-      :class="{ 'font-weight-normal': hiddenAsterisk }">
-      {{ label }}
-      <span
-        v-if="rules.includes('required') && !hiddenAsterisk"
-        class="required"
-        v-text="'*'" />
-    </label>
-
-    <div :class="{ has_error: errors[0] }">
-      <!-- Field -->
-      <template v-if="!showPassword">
-        <a-input
-          :type="type"
-          :disabled="disabled"
-          :value="value"
-          :class="classInput"
-          :maxLength="maxlength ? maxlength : null"
-          :placeholder="placeholder"
-          :readOnly="!autofill || readonly"
-          @input="handleType($event)"
-          @focus="handleFocus"
-          @blur="handleBlur"
-          @keypress="type === 'number' ? preventE($event) : ''" />
-      </template>
-
-      <template v-else>
-        <a-input-password
-          :disabled="disabled"
-          :value="value"
-          :class="classInput"
-          :placeholder="placeholder"
-          :readOnly="!autofill || readonly"
-          @input="handleType($event)"
-          @focus="handleFocus"
-          @keypress="type === 'number' ? preventE($event) : ''" />
-      </template>
-
-      <!-- Message Error -->
-      <span
-        v-if="errors[0]"
-        class="errors"
-        v-html="errors[0]" />
-    </div>
-  </ValidationProvider>
+  <h4>InputText component</h4>
 </template>
 
-<script>
-export default {
-  name: 'InputTextComponent',
+<script lang="ts">
+// Composition
+import { defineComponent } from 'vue'
 
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
+export default defineComponent({
+  name: 'InputText',
 
   props: {
     vid: { type: String, default: '' },
@@ -83,8 +27,8 @@ export default {
     maxlength: { type: [String, Number], default: '' },
   },
 
-  methods: {
-    preventE($event) {
+  setup(props, { emit }) {
+    const preventE = ($event: any): void => {
       if (
         $event.which !== 8 &&
         $event.which !== 0 &&
@@ -92,25 +36,32 @@ export default {
       ) {
         $event.preventDefault()
       }
-    },
+    }
 
-    handleType($event) {
-      if (this.$props.disabled) return
-      this.$emit('change', $event.target.value)
-    },
+    const handleType = ($event: any): void => {
+      if (props.disabled) return
+      emit('change', $event.target.value)
+    }
 
-    handleFocus($event) {
-      if (!this.autofill) {
+    const handleFocus = ($event: any): void => {
+      if (!props.autofill) {
         $event.target.removeAttribute('readonly')
       }
-    },
+    }
 
-    handleBlur(event) {
-      if (this.$props.disabled) return
-      this.$emit('blur', event.target.value)
-    },
+    const handleBlur = ($event: any): void => {
+      if (props.disabled) return
+      emit('blur', $event.target.value)
+    }
+
+    return {
+      preventE,
+      handleType,
+      handleFocus,
+      handleBlur,
+    }
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

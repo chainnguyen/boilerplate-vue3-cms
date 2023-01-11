@@ -1,6 +1,17 @@
 import { PERMISSION } from './permission.enum'
 
-export const SIDEBAR = [
+type SidebarEnum = {
+  id: string
+  icon: string
+  title: string
+  dropdown: boolean
+  routeName: string
+  childrenRoutes: string[]
+  role: string[]
+  dropdownItems?: SidebarEnum[]
+}
+
+export const SIDEBAR: SidebarEnum[] = [
   {
     id: 'management_event',
     icon: 'dashboard',

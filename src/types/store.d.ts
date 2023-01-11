@@ -23,15 +23,13 @@ export type StoreResetPasswordParam = {
   new_password: string | null
 }
 
-export type StoreUserProfile =
-  | {
-      id: string
-      role: string
-      name: string
-      avatar: string
-      created_at: string
-    }
-  | {}
+export type StoreUserProfile = {
+  id: string
+  role: string
+  name: string
+  avatar: string
+  created_at: string
+}
 
 export interface ICommonModuleState {
   list: {}[] | null

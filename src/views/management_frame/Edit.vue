@@ -1,30 +1,33 @@
 <template>
   <div>
     <!-- Block: Page title -->
-    <h1>Edit Frame</h1>
+    <page-title title="Edit Frame" />
 
     <!-- Block: Main content -->
-    <frame-form-component />
+    <frame-form update-mode />
   </div>
 </template>
 
 <script lang="ts">
 // Composition
 import { defineComponent } from 'vue'
-// Store
-// import store from '@/shared/store'
 // Components
-import FrameFormComponent from '@/shared/components/management_frame/FrameForm.vue'
+import PageTitle from '@/shared/components/common/PageTitle.vue'
+import FrameForm from '@/shared/components/management_frame/FrameForm.vue'
+// Others
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'EditFramePage',
 
   components: {
-    FrameFormComponent,
+    PageTitle,
+    FrameForm,
   },
 
   setup() {
-    return {}
+    const store = useStore()
+    return { store }
   },
 })
 </script>

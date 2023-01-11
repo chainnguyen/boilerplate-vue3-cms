@@ -1,12 +1,12 @@
 <template>
   <div class="main-container">
     <!-- Block: Page title -->
-    <h1>Frame list</h1>
+    <page-title title="Frame list" />
 
     <!-- Block: Main content -->
     <section class="main-container_content">
       <!-- Section: Search -->
-      <frame-search-component />
+      <frame-search />
     </section>
   </div>
 </template>
@@ -14,21 +14,23 @@
 <script lang="ts">
 // Composition
 import { defineComponent } from 'vue'
-// Store
-// import store from '@/shared/store'
 // Components
-import FrameSearchComponent from '@/shared/components/management_frame/FrameSearch.vue'
+import PageTitle from '@/shared/components/common/PageTitle.vue'
+import FrameSearch from '@/shared/components/management_frame/FrameSearch.vue'
 // Others
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'FramePage',
 
   components: {
-    FrameSearchComponent,
+    PageTitle,
+    FrameSearch,
   },
 
   setup() {
-    return {}
+    const store = useStore()
+    return { store }
   },
 })
 </script>

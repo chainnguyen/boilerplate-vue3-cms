@@ -16,7 +16,7 @@ import {
 // Declare type and value of state
 export type AuthState = {
   bearerToken: string | null | undefined
-  userProfile: StoreUserProfile
+  userProfile: StoreUserProfile | {}
 }
 const initialState: AuthState = {
   bearerToken: null,

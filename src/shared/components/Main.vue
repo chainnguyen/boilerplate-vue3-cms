@@ -1,5 +1,7 @@
 <template>
-  <a-layout-content id="main">
+  <a-layout-content
+    id="main"
+    :class="{ 'full-screen': layout === 'auth' }">
     <transition
       name="page"
       mode="out-in">
@@ -10,10 +12,19 @@
 
 <script lang="ts">
 // Composition
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
+// Others
+import { useStore } from 'vuex'
 
 export default defineComponent({
-  name: 'MainComponent',
+  name: 'MainLayout',
+
+  setup() {
+    const store = useStore()
+    const layout = computed<string>(() => store.getters['layout'])
+
+    return { layout }
+  },
 })
 </script>
 

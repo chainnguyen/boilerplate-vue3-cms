@@ -1,54 +1,13 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="rules"
-    :class="classContainer"
-    v-slot="{ errors }">
-    <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-      :class="{ 'font-weight-normal': hiddenAsterisk }">
-      {{ label }}
-      <span
-        v-if="rules.includes('required') && !hiddenAsterisk"
-        class="required"
-        v-text="'*'" />
-    </label>
-
-    <div :class="{ has_error: errors[0] }">
-      <!-- Field -->
-      <a-input-number
-        :disabled="disabled"
-        :value="value"
-        :class="classInput"
-        :placeholder="placeholder"
-        :readOnly="!autofill || readonly"
-        :min="+min"
-        :max="+max"
-        @change="handleType($event)"
-        @focus="handleFocus"
-        @blur="handleBlur" />
-
-      <!-- Message Error -->
-      <span
-        v-if="errors[0]"
-        class="errors"
-        v-html="errors[0]" />
-    </div>
-  </ValidationProvider>
+  <h4>InputTextNumber component</h4>
 </template>
 
-<script>
-export default {
-  name: 'InputTextNumberComponent',
+<script lang="ts">
+// Composition
+import { defineComponent } from 'vue'
 
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
+export default defineComponent({
+  name: 'InputTextNumber',
 
   props: {
     vid: { type: String, default: '' },
@@ -68,24 +27,30 @@ export default {
     autofill: { type: Boolean, default: true },
   },
 
-  methods: {
-    handleType($event) {
-      if (this.$props.disabled) return
-      this.$emit('change', $event)
-    },
+  setup(props, { emit }) {
+    const handleType = ($event: any): void => {
+      if (props.disabled) return
+      emit('change', $event)
+    }
 
-    handleFocus($event) {
-      if (!this.autofill) {
+    const handleFocus = ($event: any): void => {
+      if (!props.autofill) {
         $event.target.removeAttribute('readonly')
       }
-    },
+    }
 
-    handleBlur(event) {
-      if (this.$props.disabled) return
-      this.$emit('blur', event.target.value)
-    },
+    const handleBlur = ($event: any): void => {
+      if (props.disabled) return
+      emit('blur', $event)
+    }
+
+    return {
+      handleType,
+      handleFocus,
+      handleBlur,
+    }
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

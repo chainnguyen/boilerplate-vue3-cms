@@ -31,14 +31,14 @@ export default defineComponent({
       emit('handleCurrentChange', val)
     }
 
-    const onShowTotal = (total: number) => {
+    const onShowTotal = (total: number): void => {
       // return (
       //   this.showTotal &&
       //   this.$t('total_number') + ' ' + total + ' ' + this.$t('record')
       // ),
     }
 
-    const onShowSizeChange = (current: string, pageSize: number) => {
+    const onShowSizeChange = (current: string, pageSize: number): void => {
       emit('handleSizeChange', { page: current, per_page: pageSize })
     }
 

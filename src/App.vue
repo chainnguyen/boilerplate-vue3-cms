@@ -4,7 +4,7 @@
       :is="layout"
       v-if="layout" />
 
-    <loading-component v-if="loading" />
+    <loading v-if="loading" />
   </div>
 </template>
 
@@ -12,7 +12,7 @@
 // Composition
 import { defineComponent, computed } from 'vue'
 // Components
-import LoadingComponent from '@/shared/components/Loading.vue'
+import Loading from '@/shared/components/layout/Loading.vue'
 // Others
 import { useStore } from 'vuex'
 
@@ -20,7 +20,7 @@ export default defineComponent({
   name: 'Application',
 
   components: {
-    LoadingComponent,
+    Loading,
     auth: () => import(/* webpackChunkName: "auth" */ '@/layouts/Auth.vue'),
     default: () =>
       import(/* webpackChunkName: "default" */ '@/layouts/Default.vue'),
@@ -28,6 +28,7 @@ export default defineComponent({
 
   setup() {
     const store = useStore()
+
     const layout = computed<string>(() => store.getters['layout'])
     const loading = computed<boolean>(() => store.state['loader/loading'])
 

@@ -1,50 +1,13 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="rules"
-    v-slot="{ errors }">
-    <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-      :class="{ 'font-weight-normal': hiddenAsterisk }">
-      {{ label }}
-      <span
-        v-if="rules.includes('required') && !hiddenAsterisk"
-        class="required"
-        v-text="'*'" />
-    </label>
-
-    <div :class="{ has_error: errors[0] }">
-      <a-checkbox
-        :disabled="disabled"
-        :value="value"
-        :class="classInput"
-        :readOnly="!autofill || readonly"
-        @change="handleChange"
-        @focus="handleFocus">
-        {{ nameLabel }}
-      </a-checkbox>
-
-      <!-- Message Error -->
-      <span
-        v-if="errors[0]"
-        class="errors"
-        v-html="errors[0]" />
-    </div>
-  </ValidationProvider>
+  <h4>InputCheckbox component</h4>
 </template>
 
-<script>
-export default {
-  name: 'InputCheckbox',
+<script lang="ts">
+// Composition
+import { defineComponent } from 'vue'
 
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
+export default defineComponent({
+  name: 'InputCheckbox',
 
   props: {
     vid: { type: String, default: '' },
@@ -60,17 +23,22 @@ export default {
     autofill: { type: Boolean, default: true },
   },
 
-  methods: {
-    handleChange($event) {
-      if (this.$props.disabled) return
-      this.$emit('change', $event.target.checked)
-    },
+  setup(props, { emit }) {
+    const handleChange = ($event: any): void => {
+      if (props.disabled) return
+      emit('change', $event.target.checked)
+    }
 
-    handleFocus($event) {
-      if (!this.autofill) {
+    const handleFocus = ($event: any): void => {
+      if (!props.autofill) {
         $event.target.removeAttribute('readonly')
       }
-    },
+    }
+
+    return {
+      handleChange,
+      handleFocus,
+    }
   },
-}
+})
 </script>

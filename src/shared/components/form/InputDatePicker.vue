@@ -1,60 +1,19 @@
 <template>
-  <ValidationProvider
-    tag="div"
-    :name="field"
-    :vid="vid"
-    :rules="rules"
-    :class="classContainer"
-    v-slot="{ errors }">
-    <!-- Label -->
-    <label
-      v-if="label"
-      class="label"
-      :class="{ 'font-weight-normal': hiddenAsterisk }">
-      {{ label }}
-      <span
-        v-if="rules.includes('required') && !hiddenAsterisk"
-        class="required"
-        v-text="'*'" />
-    </label>
-
-    <div :class="{ has_error: errors[0] }">
-      <!-- Field -->
-      <a-date-picker
-        :show-time="showTime"
-        :value="modelDate"
-        :placeholder="placeholder"
-        :locale="localeOptions[locale]"
-        :disabled="disabled"
-        :disabledDate="handleDisabledDate"
-        :valueFormat="valueFormat"
-        :format="format"
-        @change="handleChange" />
-
-      <!-- Message Error -->
-      <span
-        v-if="errors[0]"
-        class="errors"
-        v-html="errors[0]" />
-    </div>
-  </ValidationProvider>
+  <h4>InputDatePicker component</h4>
 </template>
 
-<script>
-// Core
+<script lang="ts">
+// Composition
+import { defineComponent, reactive, computed } from 'vue'
+// Others
 import moment from 'moment'
 import english from 'ant-design-vue/lib/date-picker/locale/en_US'
 import vietnamese from 'ant-design-vue/lib/date-picker/locale/vi_VN'
-// Helpers
-import { verifyArgument } from '@/shared/helpers'
+// Types
+import { IFreeObject } from '@/types/global'
 
-export default {
-  name: 'InputDatePickerComponent',
-
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
+export default defineComponent({
+  name: 'InputDatePicker',
 
   props: {
     vid: { type: String, default: '' },
@@ -75,51 +34,30 @@ export default {
     showTime: { type: Boolean, default: false },
   },
 
-  data() {
-    return {
-      localeOptions: { english, vietnamese },
-      argumentRule: [
-        'before_today',
-        'today',
-        'after_today',
-        'before_and_today',
-        'after_and_today',
-      ],
+  setup(props, { emit }) {
+    const localeOptions: IFreeObject = reactive({ english, vietnamese })
+    const argumentRule: string[] = reactive([
+      'before_today',
+      'today',
+      'after_today',
+      'before_and_today',
+      'after_and_today',
+    ])
+
+    const modelDate = computed(() => (props.value ? moment(props.value) : null))
+
+    const handleChange = (value: Date | string) => {
+      if (props.disabled) return
+      emit('change', value)
     }
-  },
-
-  computed: {
-    modelDate() {
-      return this.value ? moment(this.value) : null
-    },
-  },
-
-  methods: {
-    handleChange(value) {
-      if (this.$props.disabled) return
-      this.$emit('change', value)
-    },
-
-    handleDisabledDate(current) {
-      if (this.$props.disabled) return false
-      const { disabledType, disabledRange } = this.$props
-
-      if (disabledType) {
-        return this.executeDisabledType(current, disabledType)
-      } else if (disabledRange.length) {
-        return this.executeDisabledRange(current, disabledRange)
-      } else {
-        return false
-      }
-    },
 
     /**
      * @param current {date}
      * @param type {string}
      * @returns {boolean}
      */
-    executeDisabledType(current, type) {
-      verifyArgument(this.argumentRule, type)
+    const executeDisabledType = (current: string, type: string): boolean => {
+      // verifyArgument(this.argumentRule, type)
 
       let result = false
       switch (type) {
@@ -141,14 +79,17 @@ export default {
       }
 
       return result
-    },
+    }
 
     /**
      * @param current {date}
      * @param range {array}
      * @returns {boolean}
      */
-    executeDisabledRange(current, range) {
+    const executeDisabledRange = (
+      current: string,
+      range: (string | unknown)[]
+    ): boolean => {
       if (range.length > 3) {
         console.error(
           `The parameter's path was wrong. Props "disabledRange" expected only three parameters at most, please check again parameter.`
@@ -157,11 +98,11 @@ export default {
       }
 
       const [periodStart, periodEnd, mode] = range
-      let momentCompare = [false, false]
-      !moment(periodStart).isValid() &&
-        verifyArgument(this.argumentRule, periodStart)
-      !moment(periodEnd).isValid() &&
-        verifyArgument(this.argumentRule, periodEnd)
+      let momentCompare: boolean[] = [false, false]
+      // !moment(periodStart).isValid() &&
+      // verifyArgument(this.argumentRule, periodStart)
+      // !moment(periodEnd).isValid() &&
+      // verifyArgument(this.argumentRule, periodEnd)
 
       // Between mode
       if (mode === 'between') {
@@ -170,7 +111,7 @@ export default {
       }
 
       // Standard mode
-      range.forEach((period, idx) => {
+      range.forEach((period: string | unknown, idx: number) => {
         if (idx >= 2) return
 
         switch (period) {
@@ -195,9 +136,31 @@ export default {
       })
 
       return momentCompare[0] || momentCompare[1]
-    },
+    }
+
+    const handleDisabledDate = (current: string): boolean => {
+      if (props.disabled) return true
+      const { disabledType, disabledRange } = props
+
+      if (disabledType) {
+        return executeDisabledType(current, disabledType)
+      } else if (disabledRange.length) {
+        return executeDisabledRange(current, disabledRange)
+      } else {
+        return false
+      }
+    }
+
+    return {
+      localeOptions,
+      argumentRule,
+      modelDate,
+
+      handleChange,
+      handleDisabledDate,
+    }
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

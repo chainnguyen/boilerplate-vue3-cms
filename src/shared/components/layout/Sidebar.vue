@@ -90,26 +90,75 @@
 
 <script lang="ts">
 // Composition
-import { defineComponent } from 'vue'
+import {
+  defineComponent,
+  onMounted,
+  onUnmounted,
+  ref,
+  watch,
+  computed,
+} from 'vue'
 // Others
 import { useStore } from 'vuex'
 import { SIDEBAR } from '@/enums/sidebar.enum'
+// Types
+import { StoreUserProfile } from '@/types/store'
 
 export default defineComponent({
-  name: 'SidebarComponent',
+  name: 'SidebarLayout',
 
   props: {
     collapsed: { type: Boolean, required: true, default: false },
   },
 
-  setup() {
+  setup(props, { emit }) {
     const store = useStore()
 
-    const toggleSidebar = () => {}
+    const isMobile = computed<boolean>(() => store.getters['isMobile'])
+    const userProfile = computed<StoreUserProfile>(
+      () => store.state['auth/userProfile']
+    )
+    const validProfile = computed<any>(
+      () => Object.keys(userProfile.value).length && userProfile.value
+    )
 
-    const handleResize = (event: EventSource) => {}
+    // Getter & Setter
+    const collapsedController = ref<boolean>(false)
+    watch(
+      () => props.collapsed,
+      (val) => {
+        collapsedController.value = val
+      },
+      { immediate: true }
+    )
+    watch(collapsedController, (val) => {
+      emit('update:collapsed', val)
+    })
+    // END - Getter & Setter
+
+    onMounted(() => {
+      collapsedController.value = isMobile.value
+      window.addEventListener('resize', this.handleResize)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', this.handleResize)
+    })
+
+    const toggleSidebar = (): void => {
+      collapsedController.value = !collapsedController.value
+    }
+
+    const handleResize = ($event: any): void => {
+      const { innerWidth } = $event.target
+
+      if (innerWidth <= 768) collapsedController.value = true
+    }
 
     return {
+      collapsedController,
+      userProfile,
+      validProfile,
       SIDEBAR,
 
       toggleSidebar,
@@ -118,68 +167,6 @@ export default defineComponent({
   },
 })
 </script>
-
-<!--<script>-->
-<!--// Store-->
-<!--import { mapState, mapGetters } from 'vuex'-->
-<!--// Other-->
-<!--import { SIDEBAR } from '@/enums/sidebar.enum'-->
-
-<!--export default {-->
-<!--  name: 'SidebarComponent',-->
-
-<!--  props: {-->
-<!--    collapsed: { type: Boolean, required: true, default: false },-->
-<!--  },-->
-
-<!--  data() {-->
-<!--    return {-->
-<!--      SIDEBAR,-->
-<!--    }-->
-<!--  },-->
-
-<!--  created() {-->
-<!--    this.collapsedController = this.isMobile-->
-<!--    window.addEventListener('resize', this.handleResize)-->
-<!--  },-->
-
-<!--  beforeDestroy() {-->
-<!--    window.removeEventListener('resize', this.handleResize)-->
-<!--  },-->
-
-<!--  computed: {-->
-<!--    ...mapState('auth', ['userProfile']),-->
-<!--    ...mapGetters({ isMobile: 'isMobile' }),-->
-
-<!--    collapsedController: {-->
-<!--      get() {-->
-<!--        return this.$props.collapsed-->
-<!--      },-->
-<!--      set(newVal) {-->
-<!--        this.$emit('update:collapsed', newVal)-->
-<!--      },-->
-<!--    },-->
-
-<!--    validProfile() {-->
-<!--      return Object.keys(this.userProfile).length && this.userProfile-->
-<!--    },-->
-<!--  },-->
-
-<!--  methods: {-->
-<!--    toggleSidebar() {-->
-<!--      this.collapsedController = !this.collapsedController-->
-<!--    },-->
-
-<!--    handleResize(event) {-->
-<!--      const { innerWidth } = event.target-->
-
-<!--      if (innerWidth <= 768) {-->
-<!--        this.collapsedController = true-->
-<!--      }-->
-<!--    },-->
-<!--  },-->
-<!--}-->
-<!--</script>-->
 
 <style lang="scss" scoped>
 @import '@/assets/scss/helpers/_variables.scss';

@@ -1,30 +1,33 @@
 <template>
   <div>
     <!-- Block: Page title -->
-    <h1>Create Event</h1>
+    <page-title title="Create Event" />
 
     <!-- Block: Main content -->
-    <event-form-component />
+    <event-form />
   </div>
 </template>
 
 <script lang="ts">
 // Composition
 import { defineComponent } from 'vue'
-// Store
-// import store from '@/shared/store'
 // Components
-import EventFormComponent from '@/shared/components/management_event/EventForm.vue'
+import PageTitle from '@/shared/components/common/PageTitle.vue'
+import EventForm from '@/shared/components/management_event/EventForm.vue'
+// Others
+import { useStore } from 'vuex'
 
 export default defineComponent({
   name: 'CreateEventPage',
 
   components: {
-    EventFormComponent,
+    PageTitle,
+    EventForm,
   },
 
   setup() {
-    return {}
+    const store = useStore()
+    return { store }
   },
 })
 </script>

@@ -25,7 +25,7 @@
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-  name: 'ImageZoomComponent',
+  name: 'ImageZoom',
 
   props: {
     src: { type: String, required: true, default: '' },
@@ -37,15 +37,22 @@ export default defineComponent({
     },
   },
 
-  setup() {
+  setup(_, { emit }) {
     const visible = ref<boolean>(false)
 
-    const onLoaded = () => {}
+    const onClickZoom = (): void => {
+      visible.value = true
+    }
 
-    const onClickZoom = () => {}
+    const onLoaded = ($event: any): void => {
+      const { path } = $event
+      const loaded: boolean = path[0].complete && path[0].naturalHeight !== 0
+      emit('update:allLoaded', loaded)
+    }
 
     return {
       visible,
+
       onLoaded,
       onClickZoom,
     }
