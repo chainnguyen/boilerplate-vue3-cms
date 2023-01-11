@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <!-- Block: Page title -->
-    <page-title title="Collection list" />
+    <page-title :title="$t('management_collection.page_list')" />
 
     <!-- Block: Main content -->
     <section class="main-container_content">

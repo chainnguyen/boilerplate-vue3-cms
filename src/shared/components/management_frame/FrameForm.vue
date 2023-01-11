@@ -1,5 +1,6 @@
 <template>
   <h1>Frame Form Component</h1>
+  <p>{{ 'mode ' + (updateMode ? 'EDIT' : 'CREATE') }}</p>
 </template>
 
 <script lang="ts">

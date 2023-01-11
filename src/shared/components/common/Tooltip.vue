@@ -16,7 +16,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'TooltipComponent',
+  name: 'Tooltip',
 
   props: {
     title: { type: String, required: true, default: '' },

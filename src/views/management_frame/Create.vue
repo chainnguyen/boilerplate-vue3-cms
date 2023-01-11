@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Block: Page title -->
-    <page-title title="Create Frame" />
+    <page-title :title="$t('management_frame.create_frame')" />
 
     <!-- Block: Main content -->
     <frame-form />

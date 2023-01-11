@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <!-- Block: Page title -->
-    <page-title title="Frame list" />
+    <page-title :title="$t('management_frame.page_list')" />
 
     <!-- Block: Main content -->
     <section class="main-container_content">

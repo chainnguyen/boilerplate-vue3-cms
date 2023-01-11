@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Block: Page title -->
-    <page-title title="Create Event" />
+    <page-title :title="$t('management_event.create_event')" />
 
     <!-- Block: Main content -->
     <event-form />

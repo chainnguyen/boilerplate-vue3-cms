@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Block: Page title -->
-    <page-title title="Edit Frame" />
+    <page-title :title="$t('management_frame.edit_frame')" />
 
     <!-- Block: Main content -->
     <frame-form update-mode />

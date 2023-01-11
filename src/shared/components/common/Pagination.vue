@@ -14,9 +14,11 @@
 <script lang="ts">
 // Composition
 import { defineComponent } from 'vue'
+// Others
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
-  name: 'PaginationComponent',
+  name: 'Pagination',
 
   props: {
     total: { type: Number, default: 0 },
@@ -26,17 +28,15 @@ export default defineComponent({
     showSizeChanger: { type: Boolean, default: false },
   },
 
-  setup(_, { emit }) {
+  setup(props, { emit }) {
+    const t = useI18n()
+
     const onChange = (val: string | number) => {
       emit('handleCurrentChange', val)
     }
 
-    const onShowTotal = (total: number): void => {
-      // return (
-      //   this.showTotal &&
-      //   this.$t('total_number') + ' ' + total + ' ' + this.$t('record')
-      // ),
-    }
+    const onShowTotal = (total: number): string =>
+      props.showTotal ? t('total_number') + total + ' ' + t('record') : ''
 
     const onShowSizeChange = (current: string, pageSize: number): void => {
       emit('handleSizeChange', { page: current, per_page: pageSize })

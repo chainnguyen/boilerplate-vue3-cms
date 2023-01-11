@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <!-- Block: Page title -->
-    <page-title title="Event list" />
+    <page-title :title="$t('management_event.page_list')" />
 
     <!-- Block: Main content -->
     <section class="main-container_content">

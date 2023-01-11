@@ -10,7 +10,7 @@
 import { defineComponent, reactive, computed } from 'vue'
 
 export default defineComponent({
-  name: 'StatusTagComponent',
+  name: 'StatusTag',
 
   props: {
     name: { type: String, required: true, default: '' },

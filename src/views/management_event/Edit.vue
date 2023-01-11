@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Block: Page title -->
-    <page-title title="Edit Event" />
+    <page-title :title="$t('management_event.edit_event')" />
 
     <!-- Block: Main content -->
     <event-form update-mode />

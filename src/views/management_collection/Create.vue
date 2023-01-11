@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Block: Page title -->
-    <page-title title="Create Collection" />
+    <page-title :title="$t('management_collection.create_collection')" />
 
     <!-- Block: Main content -->
     <collection-form />

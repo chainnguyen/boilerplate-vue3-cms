@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Block: Page title -->
-    <page-title title="Edit Collection" />
+    <page-title :title="$t('management_collection.edit_collection')" />
 
     <!-- Block: Main content -->
     <collection-form update-mode />
