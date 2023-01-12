@@ -9,7 +9,7 @@
       <a-layout id="main-layout">
         <breadcrumb />
 
-        <a-config-provider :locale="locale">
+        <a-config-provider :locale="locales[locale]">
           <main-layout />
         </a-config-provider>
       </a-layout>
@@ -25,7 +25,9 @@ import HeaderLayout from '@/shared/components/layout/Header.vue'
 import MainLayout from '@/shared/components/Main.vue'
 import Breadcrumb from '@/shared/components/common/Breadcrumb.vue'
 // Others
-import vi_VN from 'ant-design-vue/es/locale/vi_VN'
+import { useI18n } from 'vue-i18n'
+import vietnamese from 'ant-design-vue/es/locale/vi_VN'
+import english from 'ant-design-vue/es/locale/en_US'
 
 export default defineComponent({
   name: 'DefaultLayout',
@@ -38,11 +40,13 @@ export default defineComponent({
   },
 
   setup() {
+    const { locale } = useI18n()
     const collapsed = ref<boolean>(false)
 
     return {
       collapsed,
-      locale: vi_VN,
+      locale,
+      locales: { vietnamese, english },
     }
   },
 })

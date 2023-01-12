@@ -1,6 +1,9 @@
-import { page } from '@/router/routes'
+// Core
+import { page } from '@/router/modules'
+// Types
+import { AppRouteModule } from '@/types/route'
 
-export default [
+const errors: AppRouteModule[] = [
   // Server Error
   {
     path: '/server-error',
@@ -23,3 +26,5 @@ export default [
     component: page('error/NotFound.vue'),
   },
 ]
+
+export default errors

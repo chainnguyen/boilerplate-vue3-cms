@@ -13,26 +13,32 @@ import { EventStatus } from '@/types/views/event'
 import { FrameStatus } from '@/types/views/frame'
 import { CollectionStatus } from '@/types/views/collection'
 
+type GeneralStatus = EventStatus | FrameStatus | CollectionStatus
+type ColorControl = {
+  acceptable: GeneralStatus[]
+  color: string
+}
+
 export default defineComponent({
   name: 'StatusTag',
 
   props: {
     name: { type: String, required: true, default: '' },
     type: {
-      type: String as PropType<EventStatus | FrameStatus | CollectionStatus>,
+      type: String as PropType<GeneralStatus>,
       required: true,
       default: '',
     },
   },
 
   setup(props) {
-    const colorControl: { acceptable: string[]; color: string }[] = reactive([
+    const colorControl: ColorControl[] = reactive([
       {
         acceptable: ['happening', 'applying'],
         color: '#4CAF50',
       },
       {
-        acceptable: ['happened', 'not-apply'],
+        acceptable: ['happened', 'not_apply'],
         color: '#717A89',
       },
       {

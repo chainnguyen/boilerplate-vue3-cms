@@ -1,20 +1,20 @@
 // Core
 import { ResolveGuard, AuthGuard, PermissionGuard } from '@/router/guards'
-import { page } from '@/router/routes'
+import { page } from '@/router/modules'
 // Layout
 import Resource from '@/shared/components/Resource.vue'
 // Others
 import { PERMISSION } from '@/enums/permission.enum'
+// Types
+import { AppRouteModule } from '@/types/route'
 
-export default [
+const event: AppRouteModule[] = [
   {
-    path: '/',
-    name: 'home',
-    redirect: '/management-event',
+    path: '/management-event',
     component: Resource,
     children: [
       {
-        path: '/management-event',
+        path: '',
         name: 'management_event',
         component: page('management_event/Index.vue'),
         meta: {
@@ -65,3 +65,5 @@ export default [
     beforeEnter: ResolveGuard([AuthGuard]),
   },
 ]
+
+export default event

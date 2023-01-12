@@ -1,5 +1,5 @@
 // Store
-import store from '@/shared/store'
+import { useStore } from 'vuex'
 // Types
 import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 
@@ -8,9 +8,10 @@ export const PermissionGuard = async (
   from: RouteLocationNormalized,
   next: NavigationGuardNext
 ) => {
-  // Check permission of page
+  const store = useStore()
   const { role } = to.meta
-  if (!role.includes(store.state.auth.userProfile.role)) {
+  // @ts-ignore
+  if (!role.includes(store.state.auth.userProfile?.role)) {
     return next({ name: 'not_authenticated' })
   }
 

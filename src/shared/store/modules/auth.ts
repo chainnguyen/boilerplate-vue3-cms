@@ -6,17 +6,12 @@ import { COOKIES_KEY } from '@/enums/cookie.enum'
 import { ACCOUNT } from '@/enums/account.enum'
 // Types
 import { ActionContext, ActionTree, GetterTree, MutationTree } from 'vuex'
-import {
-  IModulesStates,
-  StoreLoginParam,
-  StoreToken,
-  StoreUserProfile,
-} from '@/types/store'
+import { IModulesStates, StoreLoginParam, StoreToken, StoreUserProfile } from '@/types/store'
 
 // Declare type and value of state
 export type AuthState = {
   bearerToken: string | null | undefined
-  userProfile: StoreUserProfile | {}
+  userProfile: StoreUserProfile | Pick<StoreUserProfile, 'role'>
 }
 const initialState: AuthState = {
   bearerToken: null,
@@ -77,10 +72,7 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<AuthState, IModulesStates>, 'commit'>
 
 export type AuthActions = {
-  userLogin(
-    { commit }: AugmentedActionContext,
-    params: StoreLoginParam
-  ): boolean
+  userLogin({ commit }: AugmentedActionContext, params: StoreLoginParam): boolean
   userLogout({ commit }: AugmentedActionContext): boolean
   userProfile({ state, commit }: AugmentedActionContext): boolean
 }
@@ -88,15 +80,12 @@ const actions: ActionTree<AuthState, IModulesStates> & AuthActions = {
   userLogin({ commit }, params) {
     // LOGIN DUMMY
     const accountExist: boolean =
-      ACCOUNT.username === params.username &&
-      ACCOUNT.password === params.password
+      ACCOUNT.username === params.username && ACCOUNT.password === params.password
 
     if (!accountExist) return false
     commit('SET_TOKEN', {
       token: ACCOUNT.bearer_token,
-      expires: ACCOUNT.expires_at
-        ? new Date(ACCOUNT.expires_at)
-        : COOKIES_KEY.expires,
+      expires: ACCOUNT.expires_at ? new Date(ACCOUNT.expires_at) : COOKIES_KEY.expires,
     })
     return true
 

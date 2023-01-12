@@ -11,6 +11,8 @@ import collection from '@/shared/store/modules/collection'
 // Types
 import { IModulesStates } from '@/types/store'
 
+type StateStore = RootState & IModulesStates
+
 const modules: ModuleTree<IModulesStates> = {
   auth,
   loader,
@@ -25,7 +27,7 @@ const modules: ModuleTree<IModulesStates> = {
 export type RootState = {
   layout: string | null
 }
-const state: RootState & Partial<IModulesStates> = {
+const state: StateStore = {
   layout: null,
 }
 // END - Declare type and value of state
@@ -53,7 +55,7 @@ const mutations: MutationTree<RootState> & RootMutations = {
 // END - Declare type and value of mutations
 
 const isDebug: boolean = import.meta.env.NODE_ENV !== 'production'
-const store = createStore<RootState>({
+const store = createStore<StateStore>({
   state,
   getters,
   mutations,

@@ -1,3 +1,15 @@
+export type optional<Type> = {
+  [Property in keyof Type]+?: Type[Property]
+}
+
+export type mutable<Type> = {
+  -readonly [Property in keyof Type]: Type[Property]
+}
+
+export type optionalAndMutable<Type> = {
+  -readonly [Property in keyof Type]+?: Type[Property]
+}
+
 export type ResponseData = {
   status: null
   success: boolean

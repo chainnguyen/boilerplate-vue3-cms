@@ -7,7 +7,6 @@ import vietnamese from '@/languages/vi'
 import { LOCALE } from '@/enums/locale.enum'
 // import validationMessagesEnglish from 'vee-validate/dist/locale/en'
 // import validationMessagesVietnamese from 'vee-validate/dist/locale/vi'
-// Types
 
 const dictionary: any = {
   vi: {

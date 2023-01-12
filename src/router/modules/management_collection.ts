@@ -1,12 +1,14 @@
 // Core
 import { ResolveGuard, AuthGuard, PermissionGuard } from '@/router/guards'
-import { page } from '@/router/routes'
+import { page } from '@/router/modules'
 // Layout
 import Resource from '@/shared/components/Resource.vue'
 // Others
 import { PERMISSION } from '@/enums/permission.enum'
+// Types
+import { AppRouteModule } from '@/types/route'
 
-export default [
+const collection: AppRouteModule[] = [
   {
     path: '/management-collection',
     component: Resource,
@@ -63,3 +65,5 @@ export default [
     beforeEnter: ResolveGuard([AuthGuard]),
   },
 ]
+
+export default collection
