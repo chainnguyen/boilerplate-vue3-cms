@@ -4,13 +4,13 @@
 
 <script lang="ts">
 // Composition
-import { defineComponent, reactive, computed } from 'vue'
+import { defineComponent, PropType, reactive, computed } from 'vue'
 // Others
-import moment from 'moment'
+import moment, { Moment } from 'moment'
 import english from 'ant-design-vue/lib/date-picker/locale/en_US'
 import vietnamese from 'ant-design-vue/lib/date-picker/locale/vi_VN'
 // Types
-import { IFreeObject } from '@/types/global'
+import { DisabledType, IFreeObject } from '@/types/global'
 
 export default defineComponent({
   name: 'InputDatePicker',
@@ -28,15 +28,22 @@ export default defineComponent({
     hiddenAsterisk: { type: Boolean, default: false },
     classContainer: { type: String, default: '' },
     disabled: { type: Boolean, default: false },
-    // before_today, today, after_today, before_and_today, after_and_today
-    disabledType: { type: String, default: '' },
-    disabledRange: { type: Array, default: () => [] },
+    disabledType: {
+      type: String as PropType<DisabledType>,
+      default: '',
+    },
+    disabledRange: {
+      type: Array as PropType<(DisabledType | string)[]>,
+      default: () => [],
+    },
     showTime: { type: Boolean, default: false },
   },
 
+  emits: ['change'],
+
   setup(props, { emit }) {
     const localeOptions: IFreeObject = reactive({ english, vietnamese })
-    const argumentRule: string[] = reactive([
+    const argumentRule: DisabledType[] = reactive([
       'before_today',
       'today',
       'after_today',
@@ -44,7 +51,7 @@ export default defineComponent({
       'after_and_today',
     ])
 
-    const modelDate = computed(() => (props.value ? moment(props.value) : null))
+    const modelDate = computed<Moment | null>(() => (props.value ? moment(props.value) : null))
 
     const handleChange = (value: Date | string) => {
       if (props.disabled) return
@@ -59,7 +66,7 @@ export default defineComponent({
     const executeDisabledType = (current: string, type: string): boolean => {
       // verifyArgument(this.argumentRule, type)
 
-      let result = false
+      let result: boolean = false
       switch (type) {
         case 'before_today':
           result = moment().isAfter(current, 'day')
@@ -86,10 +93,7 @@ export default defineComponent({
      * @param range {array}
      * @returns {boolean}
      */
-    const executeDisabledRange = (
-      current: string,
-      range: (string | unknown)[]
-    ): boolean => {
+    const executeDisabledRange = (current: string, range: (string | unknown)[]): boolean => {
       if (range.length > 3) {
         console.error(
           `The parameter's path was wrong. Props "disabledRange" expected only three parameters at most, please check again parameter.`
@@ -106,7 +110,7 @@ export default defineComponent({
 
       // Between mode
       if (mode === 'between') {
-        const start = periodStart !== 'today' ? moment(periodStart) : moment()
+        const start: Moment = periodStart !== 'today' ? moment(periodStart) : moment()
         return moment(current).isBetween(start, moment(periodEnd), 'day', '[]')
       }
 

@@ -27,6 +27,8 @@ export default defineComponent({
     disabled: { type: Boolean, default: false },
   },
 
+  emits: ['change'],
+
   setup(props, { emit }) {
     const handleChange = (value: string): void => {
       if (props.disabled) return

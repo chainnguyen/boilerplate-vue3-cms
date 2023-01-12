@@ -28,6 +28,8 @@ export default defineComponent({
     showSizeChanger: { type: Boolean, default: false },
   },
 
+  emits: ['handleCurrentChange', 'handleSizeChange'],
+
   setup(props, { emit }) {
     const t = useI18n()
 

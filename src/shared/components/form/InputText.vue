@@ -27,13 +27,11 @@ export default defineComponent({
     maxlength: { type: [String, Number], default: '' },
   },
 
+  emits: ['change', 'blur'],
+
   setup(props, { emit }) {
     const preventE = ($event: any): void => {
-      if (
-        $event.which !== 8 &&
-        $event.which !== 0 &&
-        ($event.which < 48 || $event.which > 57)
-      ) {
+      if ($event.which !== 8 && $event.which !== 0 && ($event.which < 48 || $event.which > 57)) {
         $event.preventDefault()
       }
     }

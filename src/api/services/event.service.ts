@@ -2,10 +2,10 @@
 import { ApiService } from '@/api'
 // Types
 import { AxiosResponse } from 'axios'
-import { EventList, IEventDetail } from '@/types/views/event'
+import { EventFilter, EventList, IEventDetail } from '@/types/views/event'
 
 type EventServices = {
-  getList(params?: {}): Promise<AxiosResponse<EventList>>
+  getList(params?: EventFilter | {}): Promise<AxiosResponse<EventList>>
   show(id: string | number, params?: {}): Promise<AxiosResponse<IEventDetail>>
   create(params: {}): Promise<AxiosResponse<any>>
   edit(params: { id: string | number }): Promise<AxiosResponse<any>>
@@ -28,9 +28,7 @@ export const EventService: EventServices = {
   },
 
   async edit(params) {
-    return ApiService.put(`${BaseUrl}/${params.id}`, params).then(
-      (resp) => resp
-    )
+    return ApiService.put(`${BaseUrl}/${params.id}`, params).then((resp) => resp)
   },
 
   async remove(id, params = {}) {

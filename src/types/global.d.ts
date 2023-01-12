@@ -28,3 +28,10 @@ export type StandardObject = {
   name: string
   value: string
 }
+
+export type DisabledType =
+  | 'before_today'
+  | 'today'
+  | 'after_today'
+  | 'before_and_today'
+  | 'after_and_today'

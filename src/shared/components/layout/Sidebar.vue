@@ -15,11 +15,7 @@
     <a-menu mode="inline">
       <template v-for="sidebar in SIDEBAR">
         <template
-          v-if="
-            validProfile &&
-            sidebar.dropdown &&
-            sidebar.role.includes(userProfile.role)
-          ">
+          v-if="validProfile && sidebar.dropdown && sidebar.role.includes(userProfile.role)">
           <a-sub-menu
             :key="sidebar.id"
             style="padding-left: 16px">
@@ -43,8 +39,7 @@
                   :class="[
                     'ant-menu-item',
                     isActive ||
-                    ('childrenRoute' in children &&
-                      children.childrenRoutes.includes($route.name))
+                    ('childrenRoute' in children && children.childrenRoutes.includes($route.name))
                       ? 'ant-menu-item-selected'
                       : null,
                   ]"
@@ -67,8 +62,7 @@
             @click="navigate"
             role="menuitem"
             :class="{
-              'ant-menu-item-selected':
-                isActive || sidebar.childrenRoutes.includes($route.name),
+              'ant-menu-item-selected': isActive || sidebar.childrenRoutes.includes($route.name),
             }">
             <a-icon :type="sidebar.icon" />
             <span
@@ -90,14 +84,7 @@
 
 <script lang="ts">
 // Composition
-import {
-  defineComponent,
-  onMounted,
-  onUnmounted,
-  ref,
-  watch,
-  computed,
-} from 'vue'
+import { defineComponent, onMounted, onUnmounted, ref, watch, computed } from 'vue'
 // Others
 import { useStore } from 'vuex'
 import { SIDEBAR } from '@/enums/sidebar.enum'
@@ -111,13 +98,13 @@ export default defineComponent({
     collapsed: { type: Boolean, required: true, default: false },
   },
 
+  emits: ['update:collapsed'],
+
   setup(props, { emit }) {
     const store = useStore()
 
     const isMobile = computed<boolean>(() => store.getters['isMobile'])
-    const userProfile = computed<StoreUserProfile>(
-      () => store.state['auth/userProfile']
-    )
+    const userProfile = computed<StoreUserProfile>(() => store.state['auth/userProfile'])
     const validProfile = computed<any>(
       () => Object.keys(userProfile.value).length && userProfile.value
     )

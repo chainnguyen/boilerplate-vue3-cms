@@ -1,10 +1,15 @@
 import { RecordType } from '@/types/global'
 
-type Status = 'applying' | 'not_apply'
+export type FrameStatus = 'applying' | 'not_apply'
+
+export type FrameFilter = {
+  keyword: string | null
+  status: FrameStatus | undefined
+}
 
 export interface IFrameDetail {
   id: string | number
-  status: Status
+  status: FrameStatus
   type: RecordType
   name: string
   display_order: number

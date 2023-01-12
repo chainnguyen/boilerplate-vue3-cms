@@ -7,14 +7,22 @@
 
 <script lang="ts">
 // Composition
-import { defineComponent, reactive, computed } from 'vue'
+import { defineComponent, PropType, reactive, computed } from 'vue'
+// Types
+import { EventStatus } from '@/types/views/event'
+import { FrameStatus } from '@/types/views/frame'
+import { CollectionStatus } from '@/types/views/collection'
 
 export default defineComponent({
   name: 'StatusTag',
 
   props: {
     name: { type: String, required: true, default: '' },
-    type: { type: String, required: true, default: '' },
+    type: {
+      type: String as PropType<EventStatus | FrameStatus | CollectionStatus>,
+      required: true,
+      default: '',
+    },
   },
 
   setup(props) {

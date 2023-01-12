@@ -1,8 +1,17 @@
-type Status = 'upcoming' | 'happening' | 'happened'
+export type EventStatus = 'upcoming' | 'happening' | 'happened'
+
+export type EventFilter = {
+  event_name: string | null
+  start_time: string | null
+  background_music: File | null
+  effect_movie_frame: string[]
+  background_frame: string[]
+  collection: string[]
+}
 
 export interface IEventDetail {
   id: string | number
-  status: Status
+  status: EventStatus
   name: string
   background_music_name: string
   background_music: string

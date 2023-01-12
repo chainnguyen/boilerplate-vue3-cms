@@ -23,6 +23,8 @@ export default defineComponent({
     autofill: { type: Boolean, default: true },
   },
 
+  emits: ['change'],
+
   setup(props, { emit }) {
     const handleChange = ($event: any): void => {
       if (props.disabled) return

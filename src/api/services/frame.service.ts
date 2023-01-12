@@ -2,10 +2,10 @@
 import { ApiService } from '@/api'
 // Types
 import { AxiosResponse } from 'axios'
-import { FrameList, IFrameDetail } from '@/types/views/frame'
+import { FrameFilter, FrameList, IFrameDetail } from '@/types/views/frame'
 
 type FrameServices = {
-  getList(params?: {}): Promise<AxiosResponse<FrameList>>
+  getList(params?: FrameFilter | {}): Promise<AxiosResponse<FrameList>>
   show(id: string | number, params?: {}): Promise<AxiosResponse<IFrameDetail>>
   create(params: {}): Promise<AxiosResponse<any>>
   edit(params: { id: string | number }): Promise<AxiosResponse<any>>
@@ -28,9 +28,7 @@ export const FrameService: FrameServices = {
   },
 
   async edit(params) {
-    return ApiService.put(`${BaseUrl}/${params.id}`, params).then(
-      (resp) => resp
-    )
+    return ApiService.put(`${BaseUrl}/${params.id}`, params).then((resp) => resp)
   },
 
   async remove(id, params = {}) {

@@ -25,6 +25,8 @@ export default defineComponent({
     maxlength: { type: [String, Number], default: '' },
   },
 
+  emits: ['change'],
+
   setup(props, { emit }) {
     const handleType = ($event: any): void => {
       if (props.disabled) return

@@ -4,7 +4,7 @@
 
 <script lang="ts">
 // Composition
-import { defineComponent, ref, computed, watch } from 'vue'
+import { defineComponent, PropType, ref, computed, watch } from 'vue'
 // Components
 import ImageZoom from '@/shared/components/common/ImageZoom.vue'
 // Others
@@ -20,7 +20,10 @@ export default defineComponent({
   props: {
     vid: { type: String, default: '' },
     value: { type: [String, File, Object], default: null },
-    returnType: { type: String, default: 'string' }, // string, object
+    returnType: {
+      type: String as PropType<'string' | 'object'>,
+      default: 'string',
+    },
     field: { type: String, default: '' },
     label: { type: String, default: '' },
     rules: { type: String, default: '' },
@@ -38,6 +41,8 @@ export default defineComponent({
     multiple: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
   },
+
+  emits: ['update:value'],
 
   setup(props, { emit }) {
     const store = useStore()
@@ -78,16 +83,14 @@ export default defineComponent({
     }
 
     const handlePostFile = (file: File) => {
-      store
-        .dispatch('upload/postFile', { upload_file: file })
-        .then((res: any) => {
-          if (res.success) {
-            valueModel.value = res.data
-            previewSrc.value = res.data.path
-          } else {
-            // handleRequestErrorMessage(res)
-          }
-        })
+      store.dispatch('upload/postFile', { upload_file: file }).then((res: any) => {
+        if (res.success) {
+          valueModel.value = res.data
+          previewSrc.value = res.data.path
+        } else {
+          // handleRequestErrorMessage(res)
+        }
+      })
     }
 
     const handleChange = async ($event: any) => {

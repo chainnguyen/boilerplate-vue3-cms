@@ -27,10 +27,12 @@ export default defineComponent({
     autofill: { type: Boolean, default: true },
   },
 
+  emits: ['change', 'blur'],
+
   setup(props, { emit }) {
-    const handleType = ($event: any): void => {
+    const handleType = (number: number): void => {
       if (props.disabled) return
-      emit('change', $event)
+      emit('change', number)
     }
 
     const handleFocus = ($event: any): void => {
@@ -41,7 +43,7 @@ export default defineComponent({
 
     const handleBlur = ($event: any): void => {
       if (props.disabled) return
-      emit('blur', $event)
+      emit('blur', $event.target.value)
     }
 
     return {

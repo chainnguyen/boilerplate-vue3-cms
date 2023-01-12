@@ -2,14 +2,11 @@
 import { ApiService } from '@/api'
 // Types
 import { AxiosResponse } from 'axios'
-import { CollectionList, ICollectionDetail } from '@/types/views/collection'
+import { CollectionFilter, CollectionList, ICollectionDetail } from '@/types/views/collection'
 
 type CollectionServices = {
-  getList(params?: {}): Promise<AxiosResponse<CollectionList>>
-  show(
-    id: string | number,
-    params?: {}
-  ): Promise<AxiosResponse<ICollectionDetail>>
+  getList(params?: CollectionFilter | {}): Promise<AxiosResponse<CollectionList>>
+  show(id: string | number, params?: {}): Promise<AxiosResponse<ICollectionDetail>>
   create(params: {}): Promise<AxiosResponse<any>>
   edit(params: { id: string | number }): Promise<AxiosResponse<any>>
   remove(id: string | number, params?: {}): Promise<AxiosResponse<any>>
@@ -31,9 +28,7 @@ export const CollectionService: CollectionServices = {
   },
 
   async edit(params) {
-    return ApiService.put(`${BaseUrl}/${params.id}`, params).then(
-      (resp) => resp
-    )
+    return ApiService.put(`${BaseUrl}/${params.id}`, params).then((resp) => resp)
   },
 
   async remove(id, params = {}) {
