@@ -31,7 +31,6 @@ const beforeEach = (
   from: RouteLocationNormalized,
   next: NavigationGuardNext
 ) => {
-  console.log(to.matched)
   const currentRoute: RouteRecordNormalized | undefined = head(to.matched)
   store.commit('SET_LAYOUT', {
     layout: (currentRoute && currentRoute.meta.layout) || 'default',

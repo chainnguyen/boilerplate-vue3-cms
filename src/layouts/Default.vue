@@ -20,6 +20,7 @@
 <script lang="ts">
 // Composition
 import { defineComponent, ref } from 'vue'
+// Components
 import SidebarLayout from '@/shared/components/layout/Sidebar.vue'
 import HeaderLayout from '@/shared/components/layout/Header.vue'
 import MainLayout from '@/shared/components/Main.vue'

@@ -1,18 +1,24 @@
+// Docs: // https://eslint.org/docs/user-guide/configuring
+
 module.exports = {
+  root: true,
   env: {
-    node: true,
+    browser: true,
+    node: true
   },
   extends: [
     "eslint:recommended",
     "plugin:vue/vue3-recommended",
-    "prettier"
+    '@vue/typescript/recommended',
+    '@vue/prettier'
   ],
+  plugins: ['vue', 'prettier'],
   rules: {
-    // override/add rules settings here
+    // Override/add rules settings here
+    "camelcase": "off",
     "generator-star-spacing": "off",
     "no-unused-vars": "off",
     "no-useless-catch": "off",
-    "camelcase": "off",
     "vue/no-useless-catch": "off",
     "vue/no-deprecated-filter": "off",
     "vue/require-default-prop": "off",

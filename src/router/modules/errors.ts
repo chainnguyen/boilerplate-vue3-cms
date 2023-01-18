@@ -20,7 +20,7 @@ const errors: AppRouteModule[] = [
   },
   // Not found
   {
-    path: '/not-found',
+    path: '/:pathMatch(.*)*',
     name: 'not_found',
     meta: {},
     component: page('error/NotFound.vue'),

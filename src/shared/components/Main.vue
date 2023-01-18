@@ -5,14 +5,14 @@
     <transition
       name="page"
       mode="out-in">
-      <router-view v-if="true" />
+      <router-view />
     </transition>
   </a-layout-content>
 </template>
 
 <script lang="ts">
 // Composition
-import { computed, defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 // Others
 import { useStore } from 'vuex'
 

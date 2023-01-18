@@ -19,19 +19,19 @@ yarn | npm install
 <code>.env.development</code>
 ```
 VITE_ROUTER_BASE=/
-VITE_APP_AXIOS_BASE_URL=https://localhost:8080/dev
+VITE_AXIOS_BASE_URL=https://localhost:8080/dev
 ```
 
 <code>.env.staging</code>
 ```
 VITE_ROUTER_BASE=/
-VITE_APP_AXIOS_BASE_URL=https://localhost:8080/stag
+VITE_AXIOS_BASE_URL=https://localhost:8080/stag
 ```
 
 <code>.env.production</code>
 ```
 VITE_ROUTER_BASE=/
-VITE_APP_AXIOS_BASE_URL=https://localhost:8080/prod
+VITE_AXIOS_BASE_URL=https://localhost:8080/prod
 ```
 
 ### Compiles and hot-reloads for development

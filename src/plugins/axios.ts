@@ -1,26 +1,31 @@
 // Core
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError,
-} from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 // Others
-import store from '@/shared/store'
-import router from '@/router'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import i18n from '@/plugins/locale'
 import Cookie from 'js-cookie'
 import { COOKIES_KEY } from '@/enums/cookie.enum'
+// Types
+import { IFreeObject } from '@/types/global'
 
 // @ts-ignore
 const { t } = i18n.global
+const store = useStore()
+const router = useRouter()
+const AcceptType: IFreeObject = {
+  json: 'application/json;charset=UTF-8',
+  formData: 'multipart/form-data',
+}
 
 const instance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_APP_AXIOS_BASE_URL as string,
+  baseURL: import.meta.env.VITE_AXIOS_BASE_URL as string,
   headers: {
-    Accept: 'application/json',
     ContentType: 'application/json;charset=UTF-8',
   },
+  // See more: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Credentials
+  withCredentials: false,
+  responseType: 'json',
   timeout: 30000, // request timeout
 })
 
@@ -30,6 +35,8 @@ instance.interceptors.request.use(
     const token: string | undefined = Cookie.get(COOKIES_KEY.token)
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
+      config.headers['Content-Type'] =
+        AcceptType[config.data instanceof FormData ? 'formData' : 'json']
     }
     store.dispatch('loader/pending')
     return config
@@ -42,7 +49,7 @@ instance.interceptors.request.use(
 
 // Response interceptor
 instance.interceptors.response.use(
-  (response): AxiosResponse => {
+  (response: AxiosResponse<any>): AxiosResponse<any> => {
     store.dispatch('loader/done')
     return response
   },
